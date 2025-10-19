@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso al Servidor - Saga RP</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="icon" href="../assets/logo.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- ESTILOS "CRYSTALLINE AURORA" REFINADOS --- */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--primary-color); /* Fondo azulito */
+            position: relative;
+        }
+
+        /* FONDO AURORA ANIMADO */
+        .aurora-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            z-index: -1; overflow: hidden; pointer-events: none;
+        }
+        .aurora-blob {
+            position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.3;
+        }
+        .aurora-blob.one {
+            width: 500px; height: 500px; background: var(--accent-color);
+            animation: move-blob-1 25s infinite alternate ease-in-out;
+        }
+        .aurora-blob.two {
+            width: 400px; height: 400px; background: #4a69bd;
+            animation: move-blob-2 30s infinite alternate ease-in-out;
+        }
+        @keyframes move-blob-1 { from { transform: translate(-20%, -20%); } to { transform: translate(150%, 80%); } }
+        @keyframes move-blob-2 { from { transform: translate(120%, 100%); } to { transform: translate(0%, 10%); } }
+
+        .page-header .page-title { text-shadow: 0 0 20px rgba(233, 69, 96, 0.6); }
+        
+        /* TARJETAS DE ACCESO */
+        .access-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 3rem; /* Más espacio entre tarjetas */
+        }
+        .access-card {
+            background: rgba(22, 33, 62, 0.6);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 3rem; /* Más padding interno */
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.4s ease-out, box-shadow 0.4s ease-out;
+            transform-style: preserve-3d;
+            transform: perspective(1500px);
+            opacity: 0;
+        }
+        .access-card.is-visible {
+            opacity: 1;
+            transform: perspective(1500px) translateY(0);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .access-card:nth-child(2) { transition-delay: 0.1s; }
+        .access-card:nth-child(3) { transition-delay: 0.2s; }
+
+        .access-card::before, .access-card::after {
+            content: '';
+            position: absolute;
+            background: var(--accent-color);
+            box-shadow: 0 0 10px var(--accent-color), 0 0 20px var(--accent-color);
+            transition: transform 0.5s ease-out;
+        }
+        .access-card::before { top: 0; left: 0; width: 100%; height: 2px; transform: scaleX(0); transform-origin: left; }
+        .access-card::after { bottom: 0; right: 0; width: 100%; height: 2px; transform: scaleX(0); transform-origin: right; }
+        .access-card:hover::before, .access-card:hover::after { transform: scaleX(1); }
+
+        .card-inner { transform: translateZ(30px); }
+        
+        .card-header { text-align: center; margin-bottom: 2rem; }
+        .card-icon { font-size: 2.5rem; color: var(--accent-color); background-color: rgba(0,0,0,0.2); width: 70px; height: 70px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 1rem; border: 1px solid rgba(255,255,255,0.1); transition: transform 0.4s ease, box-shadow 0.4s ease; }
+        .access-card:hover .card-icon { transform: scale(1.1) rotate(5deg); box-shadow: 0 0 20px rgba(233, 69, 96, 0.5); }
+        
+        .access-card h2 { font-size: 1.8rem; color: var(--text-light); }
+        .card-subtitle { font-size: 1rem; color: var(--accent-color); font-weight: 600; margin-top: 0.25rem; }
+        
+        /* ESTILO PARA LAS LISTAS (ul/li) */
+        .card-content ul { list-style: none; padding-left: 0; margin-top: 1rem; }
+        .card-content li { position: relative; padding-left: 25px; margin-bottom: 1rem; color: rgba(255,255,255,0.8); line-height: 1.7; }
+        .card-content li::before {
+            content: '•';
+            color: var(--accent-color);
+            position: absolute;
+            left: 0;
+            font-size: 1.5rem;
+            line-height: 1;
+            text-shadow: 0 0 8px rgba(233, 69, 96, 0.7);
+        }
+
+        .highlight-text {
+            background-color: rgba(233, 69, 96, 0.15);
+            border: 1px solid rgba(233, 69, 96, 0.5);
+            padding: 2px 8px;
+            border-radius: 5px;
+            color: var(--text-light);
+            font-weight: bold;
+        }
+        
+        @media screen and (max-width: 768px) {
+            .access-card { text-align: center; }
+            .card-content li { text-align: left; }
+        }
+    </style>
+</head>
+<body>
+    <div class="aurora-container">
+        <div class="aurora-blob one"></div>
+        <div class="aurora-blob two"></div>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo"><img src="../assets/logo2.png" alt="Saga RP Logo"></a>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="/" class="nav-link">Inicio</a></li>
+                <li class="nav-item"><a href="acceso" class="nav-link active">Acceso</a></li>
+                <li class="nav-item dropdown"><a href="normativas/normativas" class="nav-link">Normativas</a><div class="dropdown-content"><a href="normativas/normativa-general">Normativa General</a><a href="normativas/normativa-ilegal">Normativa Ilegal</a><a href="normativas/normativa-streamers">Normativa Streamers</a></div></li>
+                <li class="nav-item dropdown"><a href="controles" class="nav-link">Controles</a><div class="dropdown-content"><a href="comandos">Comandos</a></div></li>
+                <li class="nav-item"><a href="/housing/index" class="nav-link">Housing</a></li>
+            </ul>
+            <div class="nav-join"><a href="https://discord.gg/sagarp" target="_blank" class="btn btn-primary">Discord</a></div>
+            <div class="hamburger"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <main>
+        <header class="page-header">
+            <h1 class="page-title">Acceso al Servidor</h1>
+            <p class="page-subtitle">Te ofrecemos tres formas de ingreso. Lee detenidamente para encontrar la opción que mejor se adapte a ti. <br><strong>Recuerda: El servidor es exclusivamente para mayores de 18 años.</strong></p>
+        </header>
+
+        <div class="container">
+            <div class="access-grid">
+                <div class="access-card">
+                    <div class="card-inner">
+                        <div class="card-header">
+                            <div class="card-icon">📝</div>
+                            <h2>Formularios</h2>
+                            <div class="card-subtitle">Vía Estándar</div>
+                        </div>
+                        <div class="card-content">
+                            <ul>
+                                <li>Esta es la opción principal para unirte. Los formularios se abren periódicamente y son revisados por el STAFF.</li>
+                                <li>Si tu solicitud es aceptada, recibirás el rol <span class="highlight-text">📗 | Formulario Aceptado</span>.</li>
+                                <li>A continuación, deberás abrir un ticket para enviar tu ficha de personaje.</li>
+                                <li>Tras la aprobación de la ficha, se te otorgará el rol <span class="highlight-text">✅ | WhiteList</span> para ingresar.</li>
+                                <li><strong>Nota:</strong> Los formularios que son rechazados no reciben notificación.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="access-card">
+                    <div class="card-inner">
+                        <div class="card-header">
+                            <div class="card-icon">💌</div>
+                            <h2>Invitación</h2>
+                            <div class="card-subtitle">Acceso por Amigos</div>
+                        </div>
+                        <div class="card-content">
+                            <h3>Condiciones</h3>
+                            <ul>
+                                <li>El padrino debe tener Whitelist activa.</li>
+                                <li>Debe contar con un mínimo de 15 horas jugadas en el WIPE actual.</li>
+                            </ul>
+                            <h3>Tipos de Invitaciones</h3>
+                            <ul>
+                                <li><strong>Normal:</strong> Una única invitación por jugador.</li>
+                                <li><strong>VIP:</strong> Permite invitar a una persona adicional.</li>
+                            </ul>
+                            <p><strong>Responsabilidad:</strong> Proporcionar información falsa resultará en sanciones para ambos.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="access-card">
+                    <div class="card-inner">
+                        <div class="card-header">
+                            <div class="card-icon">🚀</div>
+                            <h2>Boost Form</h2>
+                            <div class="card-subtitle">Acceso Prioritario</div>
+                        </div>
+                        <div class="card-content">
+                            <ul>
+                                <li>La opción más directa mediante el <span class="highlight-text">Priority Form</span> (costo de 15€).</li>
+                                <li>Con este método, solo necesitas elaborar tu ficha de personaje y abrir un ticket.</li>
+                                <li>Una vez tu ficha sea aceptada por el STAFF, recibirás el rol <span class="highlight-text">✅ | WhiteList</span> y podrás ingresar de inmediato.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+    <div class="footer-container">
+        <div class="footer-top">
+            <div class="footer-column footer-about">
+                <a href="/" class="footer-logo">
+                    <img src="/assets/logo2.png" alt="Saga RP Logo">
+                </a>
+                <p>Una comunidad de roleplay seria, comprometida con crear historias inmersivas e inolvidables. ¿Estás listo para empezar la tuya?</p>
+            </div>
+
+            <div class="footer-column">
+                <h4>Enlaces Rápidos</h4>
+                <ul>
+                    <li><a href="/">Inicio</a></li>
+                    <li><a href="acceso">Acceso al Servidor</a></li>
+                    <li><a href="normativas/normativas">Normativas</a></li>
+                    <li><a href="controles">Controles</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h4>Comunidad</h4>
+                <div class="social-links">
+                    <a href="https://discord.gg/sagarp" target="_blank" title="Discord">
+                        <img src="/assets/discord-logo.png" alt="Discord Logo" style="width: 28px; height: 28px; vertical-align: middle;">
+                    </a>
+                    <a href="https://x.com/RolePlay_Saga" target="_blank" title="Twitter/X">
+                        𝕏
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <hr class="footer-divider">
+        <div class="footer-bottom">
+            <p>&copy; 2025 Saga RP. Todos los derechos reservados.</p>
+        </div>
+    </div>
+</footer>
+
+    <script>
+        // SCRIPT PARA ANIMACIONES DE TARJETAS
+        const scrollObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    scrollObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.access-card').forEach(card => {
+            scrollObserver.observe(card);
+            const maxTilt = 8;
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const width = rect.width;
+                const height = rect.height;
+                const rotateX = maxTilt * ((y - height / 2) / height) * -2;
+                const rotateY = maxTilt * ((x - width / 2) / width) * 2;
+                
+                card.style.transform = `perspective(1500px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = `perspective(1500px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+            });
+        });
+    </script>
+    <script src="../js/script.js"></script>
+</body>
+</html> 

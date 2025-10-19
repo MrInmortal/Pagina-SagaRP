@@ -1,0 +1,114 @@
+/* Definimos las variables de color para consistencia */
+:root {
+    --primary-color: #0d1226; /* Fondo azul vibrante */
+    --accent-color: #E94560; /* Color de acento (rosa/rojo) */
+    --text-light: #E0E0E0;
+    --text-dark: #A0A0A0;
+    --card-background: rgba(22, 33, 62, 0.6);
+}
+
+/* --- ESTILOS "CRYSTALLINE AURORA" --- */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--primary-color);
+    position: relative;
+    color: var(--text-light);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+main {
+    flex: 1;
+}
+
+/* FONDO AURORA ANIMADO */
+.aurora-container {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+    z-index: -1; overflow: hidden; pointer-events: none;
+}
+.aurora-blob {
+    position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.3;
+}
+.aurora-blob.one {
+    width: 500px; height: 500px; background: var(--accent-color);
+    animation: move-blob-1 25s infinite alternate ease-in-out;
+}
+.aurora-blob.two {
+    width: 400px; height: 400px; background: #4a69bd;
+    animation: move-blob-2 30s infinite alternate ease-in-out;
+}
+@keyframes move-blob-1 { from { transform: translate(-20%, -20%); } to { transform: translate(150%, 80%); } }
+@keyframes move-blob-2 { from { transform: translate(120%, 100%); } to { transform: translate(0%, 10%); } }
+
+/* Estilos de la cabecera */
+.page-header {
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('../assets-housing/bg.jpg') no-repeat center center; /* IMAGEN DE FONDO GENÉRICA */
+    background-size: cover;
+    padding: 80px 0;
+    margin-bottom: 2rem;
+    text-align: center;
+    border-bottom: 3px solid var(--accent-color);
+    border-radius: 0 0 15px 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+}
+.page-header .page-title { 
+    text-shadow: 0 0 20px rgba(233, 69, 96, 0.8), 0 0 40px rgba(233, 69, 96, 0.4);
+    font-size: 3.5rem;
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+}
+.page-header .page-subtitle {
+    color: var(--text-light);
+    font-size: 1.2rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Galería de mapeados */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.gallery-item {
+    background-color: var(--card-background);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.gallery-item.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+.gallery-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+}
+.gallery-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease;
+}
+.gallery-item:hover img {
+    transform: scale(1.05);
+}
+.gallery-item h3 {
+    color: var(--text-light);
+    margin: 1rem 0 0.5rem;
+    font-size: 1.2rem;
+}
+.gallery-item p {
+    color: var(--text-dark);
+    font-size: 0.9rem;
+    padding: 0 1rem 1rem;
+}

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sandy Shores Housing - Saga RP</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="icon" href="../assets/logo.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #0d1226;
+            --accent-color: #E94560;
+            --text-light: #E0E0E0;
+            --text-dark: #A0A0A0;
+            --card-background: #1c2541; 
+        }
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background-color: var(--primary-color); 
+            position: relative; 
+            color: var(--text-light); 
+            min-height: 100vh; 
+            display: flex; 
+            flex-direction: column;
+            padding-top: 80px; 
+        }
+        main { flex: 1; }
+        .aurora-container { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; overflow: hidden; pointer-events: none; }
+        .aurora-blob { position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.2; }
+        .aurora-blob.one { width: 500px; height: 500px; background: var(--accent-color); animation: move-blob-1 25s infinite alternate ease-in-out; }
+        .aurora-blob.two { width: 400px; height: 400px; background: #4a69bd; animation: move-blob-2 30s infinite alternate ease-in-out; }
+        @keyframes move-blob-1 { from { transform: translate(-20%, -20%); } to { transform: translate(150%, 80%); } }
+        @keyframes move-blob-2 { from { transform: translate(120%, 100%); } to { transform: translate(0%, 10%); } }
+
+        .page-header {
+            text-align: center;
+            padding: 4rem 0 2rem 0;
+            border-bottom: 2px solid var(--accent-color);
+            margin-bottom: 3rem;
+            background: none;
+        }
+        .page-header .page-title {
+            font-size: 3rem;
+            color: var(--text-light);
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+            margin: 0;
+        }
+        .page-header .page-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            margin-top: 0.5rem;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+        .gallery-item {
+            background-color: var(--card-background);
+            border: 1px solid rgba(137, 151, 199, 0.2);
+            border-radius: 12px;
+            overflow: hidden;
+            text-decoration: none; /* <-- ESTA LÍNEA ELIMINA EL SUBRAYADO */
+            color: inherit;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+        .gallery-item.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .gallery-item-info {
+            padding: 1rem 1.2rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .gallery-item h3 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-light);
+        }
+        .gallery-item p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="aurora-container">
+        <div class="aurora-blob one"></div>
+        <div class="aurora-blob two"></div>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../index" class="nav-logo"><img src="../assets/logo2.png" alt="Saga RP Logo"></a>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="../index" class="nav-link">Inicio</a></li>
+                <li class="nav-item"><a href="../pages/acceso" class="nav-link">Acceso</a></li>
+                <li class="nav-item dropdown">
+                    <a href="/pages/normativas/normativas" class="nav-link">Normativas</a>
+                    <div class="dropdown-content">
+                        <a href="../pages/normativas/normativa-general">Normativa General</a>
+                        <a href="../pages/normativas/normativa-ilegal">Normativa Ilegal</a>
+                        <a href="../pages/normativas/normativa-streamers">Normativa Streamers</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="../pages/controles" class="nav-link">Controles</a>
+                    <div class="dropdown-content">
+                        <a href="../pages/comandos">Comandos</a>
+                    </div>
+                </li>
+                <li class="nav-item"><a href="index" class="nav-link active">Housing</a></li>
+            </ul>
+            <div class="nav-join"><a href="https://discord.gg/sagarp" target="_blank" class="btn btn-primary">Discord</a></div>
+            <div class="hamburger"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+    
+    <main>
+        <header class="page-header" style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('../assets-housing/bg.jpg');">
+            <h1 class="page-title">Sandy Shores</h1>
+            <p class="page-subtitle">Experimenta el encanto único del desierto y la tranquilidad de este peculiar pueblo.</p>
+        </header>
+        <div class="container">
+            <div class="gallery-grid">
+                <a href="interiors/sandy-shores/apartment-low" class="gallery-item"><img src="../assets-housing/Apartment-Low-1.png" alt="Apartment Low"><div class="gallery-item-info"><h3>Apartment Low</h3><p>Un apartamento funcional y económico para establecerse en el desierto.</p></div></a>
+                <a href="interiors/sandy-shores/trevor" class="gallery-item"><img src="../assets-housing/Trevor-1.png" alt="Trevor"><div class="gallery-item-info"><h3>Trevor</h3><p>La icónica residencia de Sandy Shores, llena de carácter y autenticidad.</p></div></a>
+                <a href="interiors/sandy-shores/v16-mid" class="gallery-item"><img src="../assets-housing/V16-Mid-1.png" alt="V16 Mid"><div class="gallery-item-info"><h3>V16 Mid</h3><p>Un interior con un toque industrial que ofrece un espacio amplio y versátil.</p></div></a>
+                <a href="interiors/sandy-shores/franklin-home" class="gallery-item"><img src="../assets-housing/Franklin-Home-1.png" alt="Franklin Home"><div class="gallery-item-info"><h3>Franklin Home</h3><p>Un hogar de estilo clásico con una distribución cómoda y familiar.</p></div></a>
+                <a href="interiors/sandy-shores/garage-4" class="gallery-item"><img src="../assets-housing/Garage4-1.png" alt="Garage 4"><div class="gallery-item-info"><h3>Garage 4</h3><p>Garaje de gran tamaño, ideal para guardar vehículos todoterreno y más.</p></div></a>
+                <a href="interiors/sandy-shores/garage" class="gallery-item"><img src="../assets-housing/Garage-1.png" alt="Garage"><div class="gallery-item-info"><h3>Garage</h3><p>Un garaje estándar y funcional para tus vehículos principales.</p></div></a>
+                <a href="interiors/sandy-shores/container" class="gallery-item"><img src="../assets-housing/Container-1.png" alt="Container"><div class="gallery-item-info"><h3>Container</h3><p>Solución de almacenamiento robusta, perfecta para el clima del desierto.</p></div></a>
+                <a href="interiors/sandy-shores/warehouse" class="gallery-item"><img src="../assets-housing/Warehouse-1.png" alt="Warehouse"><div class="gallery-item-info"><h3>Warehouse</h3><p>Un gran almacén ideal para operaciones comerciales o almacenamiento a gran escala.</p></div></a>
+                <a href="interiors/sandy-shores/trailer" class="gallery-item"><img src="../assets-housing/Trailer-1.png" alt="Trailer"><div class="gallery-item-info"><h3>Trailer</h3><p>La quintaesencia de la vida en Sandy Shores, un hogar prefabricado clásico.</p></div></a>
+                <a href="interiors/sandy-shores/ranch" class="gallery-item"><img src="../assets-housing/Ranch-1.png" alt="Ranch"><div class="gallery-item-info"><h3>Ranch</h3><p>Interior de estilo rancho, con madera y un ambiente rústico y acogedor.</p></div></a>
+                <a href="interiors/sandy-shores/basement-4" class="gallery-item"><img src="../assets-housing/Basement4-1.png" alt="Basement 4"><div class="gallery-item-info"><h3>Basement 4</h3><p>Un sótano espacioso para proyectos secretos o almacenamiento extra.</p></div></a>
+                <a href="interiors/sandy-shores/standard-motel" class="gallery-item"><img src="../assets-housing/Standard-Motel-1.png" alt="Standard Motel"><div class="gallery-item-info"><h3>Standard Motel</h3><p>Una habitación de motel sencilla para pasar la noche en el desierto.</p></div></a>
+            </div>
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-top">
+                <div class="footer-column footer-about"><a href="../index" class="footer-logo"><img src="../assets/logo2.png" alt="Saga RP Logo"></a><p>Una comunidad de roleplay seria, comprometida con crear historias inmersivas e inolvidables. ¿Estás listo para empezar la tuya?</p></div>
+                <div class="footer-column"><h4>Enlaces Rápidos</h4><ul><li><a href="../index">Inicio</a></li><li><a href="../pages/acceso">Acceso al Servidor</a></li><li><a href="/pages/normativas/normativas">Normativas</a></li><li><a href="../pages/controles">Controles</a></li><li><a href="index">Housing</a></li></ul></div>
+                <div class="footer-column"><h4>Comunidad</h4><div class="social-links"><a href="https://discord.gg/sagarp" target="_blank" title="Discord"><img src="../assets/discord-logo.png" alt="Discord Logo" style="width: 28px; height: 28px;"></a><a href="https://x.com/RolePlay_Saga" target="_blank" title="Twitter/X">𝕏</a></div></div>
+            </div>
+            <hr class="footer-divider">
+            <div class="footer-bottom"><p>&copy; 2025 Saga RP. Todos los derechos reservados.</p></div>
+        </div>
+    </footer>
+    <script>const scrollObserver=new IntersectionObserver(e=>{e.forEach((e,o)=>{if(e.isIntersecting){const t=100*o;e.target.style.transitionDelay=`${t}ms`,e.target.classList.add("is-visible"),scrollObserver.unobserve(e.target)}})},{threshold:.1});document.querySelectorAll(".gallery-item").forEach(e=>{scrollObserver.observe(e)});</script>
+    <script src="../js/script.js"></script>
+</body>
+</html>

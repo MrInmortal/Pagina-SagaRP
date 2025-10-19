@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Normativa General - Saga RP</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="icon" href="../../assets/logo.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Definimos --primary-color aquí si no está en styles.css o lo adaptamos */
+        :root {
+            --primary-color: #0d1226; /* Este es el azul vibrante del ejemplo que me diste */
+            --accent-color: #E94560; /* Color de acento para mantener la coherencia */
+            --text-light: #E0E0E0;
+        }
+
+        /* --- ESTILOS "CRYSTALLINE AURORA" PARA PÁGINAS DE TEXTO --- */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--primary-color); /* Fondo base azul vibrante */
+            position: relative;
+            color: var(--text-light); /* Asegurar que el texto sea legible */
+        }
+
+        /* FONDO AURORA ANIMADO */
+        .aurora-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            z-index: -1; overflow: hidden; pointer-events: none;
+        }
+        .aurora-blob {
+            position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.3;
+        }
+        .aurora-blob.one {
+            width: 500px; height: 500px; background: var(--accent-color);
+            animation: move-blob-1 25s infinite alternate ease-in-out;
+        }
+        .aurora-blob.two {
+            width: 400px; height: 400px; background: #4a69bd; /* Un azul diferente para el segundo blob */
+            animation: move-blob-2 30s infinite alternate ease-in-out;
+        }
+        @keyframes move-blob-1 { from { transform: translate(-20%, -20%); } to { transform: translate(150%, 80%); } }
+        @keyframes move-blob-2 { from { transform: translate(120%, 100%); } to { transform: translate(0%, 10%); } }
+
+
+        .page-header .page-title { text-shadow: 0 0 20px rgba(233, 69, 96, 0.6); }
+
+        /* Mejora para las secciones de contenido */
+        .content-section {
+            background-color: rgba(22, 33, 62, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-left: 4px solid var(--accent-color);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            opacity: 0;
+            transform: translateY(40px);
+            border-radius: 12px; /* Bordes redondeados para suavizar */
+            padding: 1.5rem 2rem; /* Añadido padding para que no se pegue el texto */
+            margin-bottom: 2rem; /* Espacio entre secciones */
+        }
+        .content-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        /* Ajuste de los delays para que la animación escalonada siga funcionando */
+        .content-section:nth-of-type(1) { transition-delay: 0s; }
+        .content-section:nth-of-type(2) { transition-delay: 0.1s; }
+        .content-section:nth-of-type(3) { transition-delay: 0.2s; }
+        .content-section:nth-of-type(4) { transition-delay: 0.3s; }
+        .content-section:nth-of-type(5) { transition-delay: 0.4s; }
+        .content-section:nth-of-type(6) { transition-delay: 0.5s; }
+        .content-section:nth-of-type(7) { transition-delay: 0.6s; }
+        .content-section:nth-of-type(8) { transition-delay: 0.7s; }
+        .content-section:nth-of-type(9) { transition-delay: 0.8s; }
+        .content-section:nth-of-type(10) { transition-delay: 0.9s; }
+        .content-section:nth-of-type(11) { transition-delay: 1s; }
+
+        .content-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+        }
+
+        .content-section h2 {
+            color: var(--accent-color); /* Color de acento para los títulos principales */
+            margin-bottom: 1rem;
+        }
+
+        .content-section h3 {
+            border-bottom: 1px solid rgba(233, 69, 96, 0.5);
+            padding-bottom: 0.5rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .content-section p {
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        /* Viñetas de neón */
+        .content-section ul {
+            list-style: none; /* Elimina la viñeta por defecto del navegador */
+            padding-left: 0;
+            margin-bottom: 1rem;
+        }
+        .content-section li {
+             position: relative; /* Necesario para el pseudo-elemento */
+             padding-left: 20px; /* Espacio para el punto */
+             margin-bottom: 0.5rem;
+             line-height: 1.4;
+        }
+        .content-section li::before {
+            content: '•';
+            color: var(--accent-color);
+            position: absolute;
+            left: 0;
+            font-size: 1.5rem;
+            line-height: 1.1;
+            text-shadow: 0 0 8px rgba(233, 69, 96, 0.7);
+        }
+    </style>
+</head>
+<body>
+    <div class="aurora-container">
+        <div class="aurora-blob one"></div>
+        <div class="aurora-blob two"></div>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../../index" class="nav-logo"><img src="../../assets/logo2.png" alt="Saga RP Logo"></a>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="../../index" class="nav-link">Inicio</a></li>
+                <li class="nav-item"><a href="../acceso" class="nav-link">Acceso</a></li>
+                <li class="nav-item dropdown">
+                    <a href="normativas" class="nav-link active">Normativas</a>
+                    <div class="dropdown-content">
+                        <a href="normativa-general">Normativa General</a>
+                        <a href="normativa-ilegal">Normativa Ilegal</a>
+                        <a href="normativa-streamers">Normativa Streamers</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="../controles" class="nav-link">Controles</a>
+                    <div class="dropdown-content">
+                        <a href="../comandos">Comandos</a>
+                    </div>
+                </li>
+                <li class="nav-item"><a href="/housing/index" class="nav-link">Housing</a></li>
+            </ul>
+            <div class="nav-join"><a href="https://discord.gg/sagarp" target="_blank" class="btn btn-primary">Discord</a></div>
+            <div class="hamburger"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <main>
+        <header class="page-header">
+            <h1 class="page-title">Normativa General</h1>
+            <p class="page-subtitle">Conceptos básicos y reglas fundamentales del roleplay en Saga RP.</p>
+        </header>
+
+        <div class="container">
+            <div class="content-section">
+                <h2>1. CONCEPTOS BÁSICOS</h2>
+                <h3>1.1. In Character (IC)</h3><p>Todo aquello que ocurre con nuestro personaje o en el entorno de la ciudad donde se encuentra, dentro del servidor de juego.</p>
+                <h3>1.2. Out of Character (OOC)</h3><p>Todas las acciones que ocurren, se hablan o realizan de forma ajena a nuestro personaje, fuera del juego.</p>
+                <h3>1.3. Metagaming (MG)</h3><p>Cuando un jugador utiliza conocimientos o información fuera del juego para influir en las acciones o decisiones de su personaje dentro del servidor.</p>
+                <h3>1.4. Powergaming (PG)</h3><p>Realizar acciones que en la vida real no tendrían sentido o serían imposibles, o forzar el rol negando la posibilidad de reacción del otro.</p>
+                <h3>1.5. Interpretación de Personaje (IDP)</h3><p>El jugador debe interpretar de forma coherente la historia, personalidad y circunstancias de su personaje.</p>
+                <h3>1.6. Valoración de Vida</h3><p>El personaje debe valorar su vida y tomar decisiones con sentido de supervivencia.</p>
+                <h3>1.7. Fairplay</h3><p>Jugar de forma limpia sin aprovechar fallos, lag o mecánicas para obtener ventajas injustas.</p>
+                <h3>1.8. Deathmatch (DM)</h3><p>Atacar, herir o matar a otro jugador sin motivo ni rol previo válido.</p>
+                <h3>1.9. Character Kill (CK)</h3><p>Muerte definitiva del personaje, con pérdida de todas sus pertenencias y relaciones.</p>
+                <ul>
+                    <li><strong>CK Voluntario:</strong> Cese temporal o definitivo solicitado por el jugador.</li>
+                    <li><strong>CK Administrativo:</strong> Ejecutado por la administración por mal desempeño en la interpretación del personaje.</li>
+                </ul>
+                <h3>1.10. Rol de Entorno (RDE)</h3><p>Toda acción en un lugar público y visible debe interpretarse considerando que la ciudad es un entorno vivo que reaccionará.</p>
+            </div>
+
+            <div class="content-section">
+                <h2>2. COMANDOS</h2>
+                <h3>2.1. /me</h3><p>Se usa para realizar acciones dentro del personaje cuando no hay animaciones disponibles.</p>
+                <h3>2.2. /do</h3><p>Comando de uso narrativo para puntualizar aspectos del personaje o del entorno. Nunca describir pensamientos o estados de ánimo.</p>
+                <h3>2.3. /entorno</h3><p>Siempre que se vaya a cometer un acto delictivo, al iniciar dicho acto deberá enviarse un /entorno con la descripción de los hechos.</p>
+                <h3>2.4. /auxilio</h3><p>Se utilizará para enviar un aviso a los cuerpos médicos en tercera persona.</p>
+                <h3>2.5. /patrullarobado</h3><p>Siempre que robes una patrulla, debes tirar el comando UNA SOLA VEZ para rolear el localizador del vehículo robado.</p>
+            </div>
+
+            <div class="content-section">
+                <h2>3. INTERPRETACIÓN Y HERIDAS</h2>
+                <h3>3.1. Coherencia y Roleo de heridas</h3><p>Siempre deberás rolear las heridas que sufra tu personaje para asegurar una interpretación coherente y realista.</p>
+                <h3>3.2. Comunicaciones en estado crítico</h3><p>Queda totalmente prohibido hablar por radio mientras te encuentres en estado de PK. Está prohibido hablar estando muerto.</p>
+                <h3>3.4. Parar o evadir rol</h3><p>Nunca se podrá parar ni evadir un rol activo.</p>
+            </div>
+
+            <div class="content-section">
+                <h2>4. ROLES Y LÍMITES</h2>
+                <h3>4.1. Roles agresivos</h3><p>Como civil, un máximo de 4 personas puede iniciar un rol agresivo.</p>
+                <h3>4.2. Eventos programados</h3><p>No se podrá iniciar un rol agresivo durante eventos programados bajo ningún concepto.</p>
+                <h3>4.3. Roles sensibles</h3>
+                <ul>
+                    <li><strong>Con consentimiento:</strong> Roles que requieren permiso previo de la persona afectada (ej.: amputaciones, roles de índole sexual, roles denigrantes).</li>
+                    <li><strong>Prohibidos:</strong> Roles de suicidio y violaciones están prohibidos en el servidor.</li>
+                </ul>
+                <h3>4.4. Ajuste de cuentas</h3><p>Debe existir un motivo de peso. Al finalizar, debe dejarse claro el motivo a la persona afectada.</p>
+            </div>
+
+            <div class="content-section">
+                <h2>5. ZONAS, ROPA Y ATUENDOS</h2>
+                <h3>5.1. Zonas seguras</h3><p>No existen zonas seguras, pero se deben interpretar con su respectivo entorno en comisarías, hospitales, barrios conflictivos y puntos de interacción (tiendas, cajeros, peluquerías, garajes, casas, etc.).</p>
+                <h3>5.2. Atuendos gubernamentales</h3><p>Se prohíbe usar ropa perteneciente a facciones gubernamentales si no perteneces a dichas facciones.</p>
+                <h3>5.3. Ropa que mejore estadísticas</h3><p>Prohibido emplear prendas que, durante un rol agresivo, puedan alterar el daño habitual ejercido por las armas.</p>
+            </div>
+
+            <div class="content-section">
+                <h2>6. VEHÍCULOS Y CONDUCCIÓN</h2>
+                <h3>6.1. PG conducción</h3><p>En persecuciones solo se podrá conducir por caminos delimitados del mapa. Si no se respeta, quedará a criterio de la administración.</p>
+                <h3>6.2. Accidentes y volcadas</h3><p>Se podrá volcar o chocar sin tener que rolear el choque. Si el coche queda boca abajo, no será necesario rolear heridas. (Nota: la administración puede valorar situaciones específicas según el contexto.)</p>
+            </div>
+
+            <div class="content-section">
+                <h2>7. TELÉFONOS, REDES Y AUDIO</h2>
+                <h3>7.1. Teléfonos de prepago</h3><p>Prohibido rolear teléfonos de prepago; el único teléfono que existe es el personal con ítem.</p>
+                <h3>7.2. Redes sociales</h3><p>No se podrá publicar en redes sociales ningún tipo de contenido sexual, gore, marcas, fotos generadas con IA o fotos OOC (ej.: memes o personajes públicos).</p>
+                <h3>7.3. Uso de modulador</h3><p>Prohibido el uso del modulador de voz a la hora de rolear; solo se podrá utilizar con permiso previo de administración.</p>
+            </div>
+
+            <div class="content-section">
+                <h2>8. EXPLOITS, SCRIPTS Y ABUSOS</h2>
+                <h3>8.1. Abuso de script y bugs</h3><p>Totalmente prohibido el uso de bugs, scripts o exploits para beneficiarte IC y obtener ventaja sobre otros jugadores (ej.: Break Boost, abuso de animaciones, etc.). Estos casos serán sancionados por el equipo administrativo.</p>
+                <h3>8.2. Fairplay y economía</h3><p>Queda prohibido el abuso de farmeo que rompa la economía del servidor o el aprovechamiento de mecánicas para beneficio propio.</p>
+            </div>
+
+            <div class="content-section">
+                <h2>9. CONDUCTA Y SANCIÓN POR COMPORTAMIENTO</h2>
+                <h3>9.1. Comportamientos discriminatorios</h3><p>Comportamientos racistas, machistas o de carácter extremo o cargante no están permitidos. La administración valorará la situación y aplicará sanciones.</p>
+                <h3>9.2. Reinicios</h3><p>No se podrá cometer actividades ilegales 15 minutos antes ni 15 minutos después de los reinicios programados.</p>
+            </div>
+            <div class="content-section">
+                <h2>10. SISTEMA DE STRIKES</h2>
+                <p>El incumplimiento de la normativa supondrá 1 strike.</p>
+                <h3>Sanciones por acumulación</h3>
+                <ul>
+                    <li>Al acumular 3 strikes, recibirás un baneo de 7 días.</li>
+                    <li>Tras cumplir esos 7 días, si vuelves a acumular otros 3 strikes, el baneo será de 30 días.</li>
+                </ul>
+                <h3>Sanciones graves</h3>
+                <p>Sanciones graves (ej.: Metagaming, uso de exploits, conductas inapropiadas) serán sancionadas directamente por la administración, sin necesidad de acumular strikes.</p>
+            </div>
+           
+            <div class="content-section" style="border-left-color: #fff;">
+                <p style="font-weight: bold;">TODA LA NORMATIVA QUEDA SUJETA A CAMBIOS Y ESTARÁ BAJO SUPERVISIÓN DEL CRITERIO DEL EQUIPO ADMINISTRATIVO.</p>
+                <hr style="border-color: rgba(255,255,255,0.1); margin: 1rem 0;">
+                <h3 style="font-size: 1rem; color: var(--accent-color);">Copyright © Todos los Derechos Reservados</h3>
+                <p style="font-size: 0.8rem; line-height: 1.5;">La reproducción, modificación no autorizada, o difusión total o parcial de este material queda prohibida sin autorización por escrito de sus propietarios.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-top">
+                <div class="footer-column footer-about">
+                    <a href="/" class="footer-logo"><img src="/assets/logo2.png" alt="Saga RP Logo"></a>
+                    <p>Una comunidad de roleplay seria, comprometida con crear historias inmersivas e inolvidables. ¿Estás listo para empezar la tuya?</p>
+                </div>
+                <div class="footer-column">
+                    <h4>Enlaces Rápidos</h4>
+                    <ul>
+                        <li><a href="/">Inicio</a></li>
+                        <li><a href="../acceso">Acceso al Servidor</a></li>
+                        <li><a href="normativas">Normativas</a></li>
+                        <li><a href="../controles">Controles</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Comunidad</h4>
+                    <div class="social-links">
+                        <a href="https://discord.gg/sagarp" target="_blank" title="Discord"><img src="/assets/discord-logo.png" alt="Discord Logo"></a>
+                        <a href="https://x.com/RolePlay_Saga" target="_blank" title="Twitter/X">𝕏</a>
+                    </div>
+                </div>
+            </div>
+            <hr class="footer-divider">
+            <div class="footer-bottom">
+                <p>&copy; 2025 Saga RP. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // SCRIPT PARA ANIMACIONES DE SCROLL
+        const scrollObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    // Considera no desobservar si quieres que la animación se repita al scrollear de nuevo
+                    // scrollObserver.unobserve(entry.target); 
+                } else {
+                    // Opcional: remover la clase si sale de la vista para que se anime de nuevo al volver
+                    // entry.target.classList.remove('is-visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.content-section').forEach((section) => {
+            scrollObserver.observe(section);
+        });
+    </script>
+    <script src="../../js/script.js"></script>
+</body>
+</html>

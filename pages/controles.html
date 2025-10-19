@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controles Básicos - Saga RP</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="icon" href="../assets/logo.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Definimos las variables de color para consistencia */
+        :root {
+            --primary-color: #0d1226; /* Fondo azul vibrante */
+            --accent-color: #E94560; /* Color de acento (rosa/rojo) */
+            --text-light: #E0E0E0;
+        }
+
+        /* --- ESTILOS "CRYSTALLINE AURORA" --- */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--primary-color);
+            position: relative;
+            color: var(--text-light);
+        }
+
+        /* FONDO AURORA ANIMADO */
+        .aurora-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            z-index: -1; overflow: hidden; pointer-events: none;
+        }
+        .aurora-blob {
+            position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.3;
+        }
+        .aurora-blob.one {
+            width: 500px; height: 500px; background: var(--accent-color);
+            animation: move-blob-1 25s infinite alternate ease-in-out;
+        }
+        .aurora-blob.two {
+            width: 400px; height: 400px; background: #4a69bd;
+            animation: move-blob-2 30s infinite alternate ease-in-out;
+        }
+        @keyframes move-blob-1 { from { transform: translate(-20%, -20%); } to { transform: translate(150%, 80%); } }
+        @keyframes move-blob-2 { from { transform: translate(120%, 100%); } to { transform: translate(0%, 10%); } }
+        
+        /* Estilos de la cabecera */
+        .page-header .page-title { text-shadow: 0 0 20px rgba(233, 69, 96, 0.6); }
+
+        /* Sección de Controles Esenciales */
+        .essential-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        .essential-card {
+            background: rgba(22, 33, 62, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s, opacity 0.5s, transform 0.5s;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        .essential-card.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .essential-card:hover {
+            transform: translateY(-8px) !important; /* !important para sobreescribir el transform inicial */
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        }
+        .essential-icon {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            line-height: 1;
+        }
+        .essential-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-light);
+            margin: 0.75rem 0;
+        }
+        .essential-key {
+            display: inline-block;
+            background-color: var(--primary-color);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 0.5rem 1.2rem;
+            border-radius: 6px;
+            font-family: 'Consolas', monospace;
+            font-size: 1.1rem;
+            color: #fff;
+            box-shadow: inset 0 -2px 0 rgba(0,0,0,0.3);
+        }
+
+        /* Grid para las categorías detalladas */
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        /* Tarjeta de Categoría con Animación */
+        .category-card {
+            background-color: rgba(22, 33, 62, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 2rem;
+            border: 1px solid rgba(255,255,255,0.1);
+            opacity: 0; /* Oculto para animación */
+            transform: translateY(40px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .category-card.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .category-card h2 {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Lista de controles mejorada */
+        .controls-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .controls-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            margin-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        /* Etiqueta de tecla con efecto 3D */
+        .key-badge {
+            background: linear-gradient(145deg, #2c2c4a, #1a1a2e);
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-weight: 600;
+            color: var(--text-light);
+            border: 1px solid rgba(255,255,255,0.1);
+            font-family: 'Consolas', monospace;
+            font-size: 0.9rem;
+            box-shadow: inset 0 -2px 0 rgba(0,0,0,0.3), 0 1px 1px rgba(0,0,0,0.2);
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+        .controls-list li:hover .key-badge {
+            transform: translateY(1px);
+            box-shadow: inset 0 -1px 0 rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="aurora-container">
+        <div class="aurora-blob one"></div>
+        <div class="aurora-blob two"></div>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo"><img src="../assets/logo2.png" alt="Saga RP Logo"></a>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="/" class="nav-link">Inicio</a></li>
+                <li class="nav-item"><a href="acceso" class="nav-link">Acceso</a></li>
+                <li class="nav-item dropdown"><a href="normativas/normativas" class="nav-link">Normativas</a><div class="dropdown-content"><a href="normativas/normativa-general">Normativa General</a><a href="normativas/normativa-ilegal">Normativa Ilegal</a><a href="normativas/normativa-streamers">Normativa Streamers</a></div></li>
+                <li class="nav-item dropdown"><a href="controles" class="nav-link active">Controles</a><div class="dropdown-content"><a href="comandos">Comandos</a></div></li>
+                <li class="nav-item"><a href="/housing/index" class="nav-link">Housing</a></li>
+            </ul>
+            <div class="nav-join"><a href="https://discord.gg/sagarp" target="_blank" class="btn btn-primary">Discord</a></div>
+            <div class="hamburger"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <main>
+        <header class="page-header">
+            <h1 class="page-title">Controles Básicos</h1>
+            <p class="page-subtitle">Personalízalos en: <span style="color:var(--accent-color)">ESC > Ajustes > Asignaciones de teclas > FiveM</span>.</p>
+        </header>
+
+        <div class="container">
+            <div class="essential-controls">
+                <div class="essential-card">
+                    <div class="essential-icon">📱</div>
+                    <div class="essential-title">Móvil</div>
+                    <div class="essential-key">F1</div>
+                </div>
+                <div class="essential-card">
+                    <div class="essential-icon">🎒</div>
+                    <div class="essential-title">Inventario</div>
+                    <div class="essential-key">TAB</div>
+                </div>
+                <div class="essential-card">
+                    <div class="essential-icon">🎤</div>
+                    <div class="essential-title">Rango de Voz</div>
+                    <div class="essential-key">Z</div>
+                </div>
+                <div class="essential-card">
+                    <div class="essential-icon">🙌</div>
+                    <div class="essential-title">Manos Arriba</div>
+                    <div class="essential-key">X</div>
+                </div>
+                <div class="essential-card">
+                    <div class="essential-icon">🕺</div>
+                    <div class="essential-title">Animaciones</div>
+                    <div class="essential-key">F3</div>
+                </div>
+            </div>
+
+            <div class="controls-grid">
+                <div class="category-card">
+                    <h2>🏃 Movimiento y Acciones</h2>
+                    <ul class="controls-list">
+                        <li><span>Tirarse al suelo</span><span class="key-badge">H</span></li>
+                        <li><span>Señalar con el dedo</span><span class="key-badge">B</span></li>
+                        <li><span>Interacción con la mano</span><span class="key-badge">ALT</span></li>
+                        <li><span>Usar ítem de acceso rápido</span><span class="key-badge">1-5</span></li>
+                    </ul>
+                </div>
+
+                <div class="category-card">
+                    <h2>🚗 Vehículos</h2>
+                    <ul class="controls-list">
+                        <li><span>Abrir / Cerrar vehículo</span><span class="key-badge">U</span></li>
+                        <li><span>Menú del vehículo</span><span class="key-badge">B</span></li>
+                        <li><span>Menú de radio (en coche)</span><span class="key-badge">G</span></li>
+                        <li><span>Limitador de velocidad</span><span class="key-badge">BLOQ MAYUS</span></li>
+                    </ul>
+                </div>
+
+                <div class="category-card">
+                    <h2>🖥️ Interfaz y Menús</h2>
+                    <ul class="controls-list">
+                        <li><span>Menú de ajustes</span><span class="key-badge">ESC</span></li>
+                        <li><span>Menú personal</span><span class="key-badge">F10</span></li>
+                        <li><span>Inventario y Ropa</span><span class="key-badge">TAB</span></li>
+                        <li><span>Inventario secundario</span><span class="key-badge">K</span></li>
+                    </ul>
+                </div>
+                
+                <div class="category-card">
+                    <h2>⚙️ Otros Controles</h2>
+                    <ul class="controls-list">
+                         <li><span>Abrir chat</span><span class="key-badge">T</span></li>
+                        <li><span>Girar la cámara</span><span class="key-badge">C</span></li>
+                        <li><span>Cambiar vista</span><span class="key-badge">V</span></li>
+                        <li><span>Modo de disparo</span><span class="key-badge">BLOQ MAYUS</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-top">
+                <div class="footer-column footer-about">
+                    <a href="/" class="footer-logo"><img src="/assets/logo2.png" alt="Saga RP Logo"></a>
+                    <p>Una comunidad de roleplay seria, comprometida con crear historias inmersivas e inolvidables. ¿Estás listo para empezar la tuya?</p>
+                </div>
+                <div class="footer-column">
+                    <h4>Enlaces Rápidos</h4>
+                    <ul>
+                        <li><a href="/">Inicio</a></li>
+                        <li><a href="acceso">Acceso al Servidor</a></li>
+                        <li><a href="normativas/normativas">Normativas</a></li>
+                        <li><a href="controles">Controles</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Comunidad</h4>
+                    <div class="social-links">
+                        <a href="https://discord.gg/sagarp" target="_blank" title="Discord"><img src="/assets/discord-logo.png" alt="Discord Logo"></a>
+                        <a href="https://x.com/RolePlay_Saga" target="_blank" title="Twitter/X">𝕏</a>
+                    </div>
+                </div>
+            </div>
+            <hr class="footer-divider">
+            <div class="footer-bottom">
+                <p>&copy; 2025 Saga RP. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // SCRIPT PARA ANIMACIONES DE SCROLL
+        const scrollObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    // Aplicar delay escalonado
+                    const delay = index * 100; // 100ms de diferencia entre cada elemento
+                    entry.target.style.transitionDelay = `${delay}ms`;
+                    entry.target.classList.add('is-visible');
+                    scrollObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        // Observar todas las tarjetas, tanto esenciales como de categoría
+        document.querySelectorAll('.essential-card, .category-card').forEach((card) => {
+            scrollObserver.observe(card);
+        });
+    </script>
+    <script src="../js/script.js"></script>
+</body>
+</html>

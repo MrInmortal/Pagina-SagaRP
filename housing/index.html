@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Housing - Saga RP</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="icon" href="../assets/logo.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root { --primary-color: #0d1226; --accent-color: #E94560; --text-light: #E0E0E0; --text-dark: #A0A0A0; --card-background: rgba(22, 33, 62, 0.6); }
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background-color: var(--primary-color); 
+            position: relative; 
+            color: var(--text-light); 
+            min-height: 100vh; 
+            display: flex; 
+            flex-direction: column;
+            padding-top: 80px; /* <-- CORRECCIÓN IMPORTANTE: Empuja el contenido hacia abajo */
+        }
+        main { flex: 1; }
+        .aurora-container { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; overflow: hidden; pointer-events: none; }
+        .aurora-blob { position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.3; }
+        .aurora-blob.one { width: 500px; height: 500px; background: var(--accent-color); animation: move-blob-1 25s infinite alternate ease-in-out; }
+        .aurora-blob.two { width: 400px; height: 400px; background: #4a69bd; animation: move-blob-2 30s infinite alternate ease-in-out; }
+        @keyframes move-blob-1 { from { transform: translate(-20%, -20%); } to { transform: translate(150%, 80%); } }
+        @keyframes move-blob-2 { from { transform: translate(120%, 100%); } to { transform: translate(0%, 10%); } }
+        
+        .page-header { background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('../assets-housing/bg.jpg') no-repeat center center; background-size: cover; padding: 60px 0; margin-bottom: 2rem; text-align: center; border-bottom: 3px solid var(--accent-color); }
+        .page-header .page-title { text-shadow: 0 0 20px rgba(233, 69, 96, 0.6); font-size: 3.5rem; }
+        
+        .content-card { background-color: var(--card-background); backdrop-filter: blur(10px); border: 1px solid rgba(137, 151, 199, 0.2); border-radius: 12px; padding: 2rem; margin-bottom: 2rem; opacity: 0; transform: translateY(40px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+        .content-card.is-visible { opacity: 1; transform: translateY(0); }
+        .content-card h2 { margin-top: 0; }
+        
+        .intro-text p { line-height: 1.7; }
+        .text-important { color: var(--accent-color); font-weight: 600; }
+
+        .map-container { height: 500px; overflow: hidden; border-radius: 8px; cursor: grab; position: relative; border: 1px solid rgba(137, 151, 199, 0.2); }
+        .map-container:active { cursor: grabbing; }
+        .map-container #housing-map { width: 100%; height: auto; }
+        .map-controls { position: absolute; top: 10px; right: 10px; z-index: 10; display: flex; gap: 5px; }
+        .map-controls button { background-color: rgba(30, 30, 40, 0.8); border: 1px solid rgba(255, 255, 255, 0.2); color: white; width: 32px; height: 32px; border-radius: 4px; cursor: pointer; font-size: 1.2rem; font-weight: bold; display: flex; align-items: center; justify-content: center; }
+        .map-controls button:hover { background-color: rgba(50, 50, 60, 0.9); }
+
+        .housing-layout-grid { display: grid; grid-template-columns: 1fr 1.7fr; gap: 2rem; align-items: start; }
+        
+        .price-table { width: 100%; border-collapse: collapse; margin-top: 1.5rem; text-align: left; }
+        .price-table th, .price-table td { padding: 1rem; border-bottom: 1px solid rgba(137, 151, 199, 0.15); }
+        .price-table th { background-color: var(--accent-color); color: var(--text-light); font-weight: 600; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.05em; }
+        .price-table th:first-child { border-radius: 8px 0 0 0; }
+        .price-table th:last-child { border-radius: 0 8px 0 0; text-align: right;}
+        .price-table tr:last-child td { border-bottom: none; }
+        .price-table td { font-size: 0.95rem; }
+        .price-table .price { color: #00ffaa; font-weight: 600; text-align: right; }
+
+        .zone-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1.5rem; }
+        .zone-card { background-color: #16213e; border: 1px solid rgba(137, 151, 199, 0.2); border-radius: 8px; padding: 1.2rem; text-align: left; transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease; text-decoration: none; color: inherit; display: block; }
+        .zone-card:hover { transform: translateY(-4px); box-shadow: 0 5px 15px rgba(0,0,0,0.3); background-color: #1a2749; }
+        .zone-card h3 { color: var(--text-light); margin: 0 0 0.3rem 0; font-size: 1rem; font-weight: 600;}
+        .zone-card p { color: var(--text-dark); font-size: 0.8rem; margin: 0; line-height: 1.5; }
+
+        @media (max-width: 1024px) {
+            .housing-layout-grid { grid-template-columns: 1fr; }
+            .zone-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 600px) {
+            .zone-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="aurora-container">
+        <div class="aurora-blob one"></div>
+        <div class="aurora-blob two"></div>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../index" class="nav-logo"><img src="../assets/logo2.png" alt="Saga RP Logo"></a>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="../index" class="nav-link">Inicio</a></li>
+                <li class="nav-item"><a href="../pages/acceso" class="nav-link">Acceso</a></li>
+                <li class="nav-item dropdown">
+                    <a href="/pages/normativas/normativas" class="nav-link">Normativas</a>
+                    <div class="dropdown-content">
+                        <a href="/pages/normativas/normativa-general">Normativa General</a>
+                        <a href="../pages/normativas/normativa-ilegal">Normativa Ilegal</a>
+                        <a href="../pages/normativas/normativa-streamers">Normativa Streamers</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="../pages/controles" class="nav-link">Controles</a>
+                    <div class="dropdown-content">
+                        <a href="../pages/comandos">Comandos</a>
+                    </div>
+                </li>
+                <li class="nav-item"><a href="index" class="nav-link active">Housing</a></li>
+            </ul>
+            <div class="nav-join"><a href="https://discord.gg/sagarp" target="_blank" class="btn btn-primary">Discord</a></div>
+            <div class="hamburger"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+    
+    <main>
+        <header class="page-header">
+            <h1 class="page-title">Housing y Propiedades</h1>
+            <p class="page-subtitle">Explora las zonas residenciales de Los Santos y encuentra tu hogar ideal.</p>
+        </header>
+
+        <div class="container">
+            <div class="content-card intro-text">
+                <p>En esta web podrás seleccionar qué inmueble quieres y sus interiores, ten en cuenta que cada zona tiene un precio preestablecido, estos precios los puedes ver a continuación y las zonas están indicadas en la sección Casas.</p>
+                <p>¡Recuerda escoger bien tanto el exterior como el interior de tu casa no vaya ser que luego te arrepientas!</p>
+                <p><strong class="text-important">IMPORTANTE - Rockford Hills</strong> y <strong class="text-important">Vinewood Hills</strong> están bajo aprobación del staff según la IDP del personaje.</p>
+            </div>
+
+            <div class="content-card">
+                <h2 style="text-align: center;">Mapa Interactivo de Zonas</h2>
+                <div class="map-container">
+                    <img src="../assets-housing/mapa.png" alt="Mapa de Zonas de Housing" id="housing-map">
+                    <div class="map-controls">
+                        <button id="zoom-in">+</button>
+                        <button id="zoom-out">-</button>
+                        <button id="reset-zoom">⟲</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="housing-layout-grid">
+                <div class="content-card">
+                    <h2>Tabla de Precios por Zona</h2>
+                    <table class="price-table">
+                        <thead>
+                            <tr>
+                                <th>Zona</th>
+                                <th>Rango de Precios</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Barrios Bajos</td><td class="price">40.000$ a 60.000$</td></tr>
+                            <tr><td>Sandy Shores</td><td class="price">50.000$</td></tr>
+                            <tr><td>Grapeseed</td><td class="price">60.000$</td></tr>
+                            <tr><td>Downtown</td><td class="price">80.000$</td></tr>
+                            <tr><td>Paleto Bay</td><td class="price">80.000$</td></tr>
+                            <tr><td>Vespucci Beach</td><td class="price">100.000$</td></tr>
+                            <tr><td>Mirror Park</td><td class="price">130.000$</td></tr>
+                            <tr><td>Great Ocean</td><td class="price">200.000$</td></tr>
+                            <tr><td>Vinewood Hills</td><td class="price">350.000$ a 500.000$</td></tr>
+                            <tr><td>Rockford Hills</td><td class="price">700.000$ a 1.000.000$</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="content-card">
+                    <h2>Zonas Disponibles</h2>
+                    <div class="zone-grid">
+                        <a href="barrios-bajos" class="zone-card"><h3>Barrios Bajos</h3><p>Propiedades económicas y acceso a la cultura local.</p></a>
+                        <a href="downtown" class="zone-card"><h3>Downtown</h3><p>El corazón de la ciudad, vida urbana vibrante.</p></a>
+                        <a href="mirror-park" class="zone-card"><h3>Mirror Park</h3><p>Ambiente moderno y tranquilo, ideal para la familia.</p></a>
+                        <a href="vespucci-beach" class="zone-card"><h3>Vespucci Beach</h3><p>Vistas al mar y estilo de vida costero.</p></a>
+                        <a href="rockford-hills" class="zone-card"><h3>Rockford Hills</h3><p>Lujo y exclusividad en la zona más prestigiosa.</p></a>
+                        <a href="vinewood-hills" class="zone-card"><h3>Vinewood Hills</h3><p>Vistas panorámicas y residencias de alto nivel.</p></a>
+                        <a href="great-ocean" class="zone-card"><h3>Great Ocean</h3><p>Playas extensas y un ambiente relajado junto al mar.</p></a>
+                        <a href="sandy-shores" class="zone-card"><h3>Sandy Shores</h3><p>El encanto del desierto y la tranquilidad rural.</p></a>
+                        <a href="grapeseed" class="zone-card"><h3>Grapeseed</h3><p>Amplios terrenos y vida agrícola en el campo.</p></a>
+                        <a href="paleto-bay" class="zone-card"><h3>Paleto Bay</h3><p>Pequeño pueblo costero con aire fresco y naturaleza.</p></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-top">
+                <div class="footer-column footer-about">
+                    <a href="../index" class="footer-logo"><img src="../assets/logo2.png" alt="Saga RP Logo"></a>
+                    <p>Una comunidad de roleplay seria, comprometida con crear historias inmersivas e inolvidables. ¿Estás listo para empezar la tuya?</p>
+                </div>
+                <div class="footer-column">
+                    <h4>Enlaces Rápidos</h4>
+                    <ul>
+                        <li><a href="../index">Inicio</a></li>
+                        <li><a href="../pages/acceso">Acceso al Servidor</a></li>
+                        <li><a href="/pages/normativas/normativas">Normativas</a></li>
+                        <li><a href="../pages/controles">Controles</a></li>
+                        <li><a href="index">Housing</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Comunidad</h4>
+                    <div class="social-links">
+                        <a href="https://discord.gg/sagarp" target="_blank" title="Discord"><img src="../assets/discord-logo.png" alt="Discord Logo" style="width: 28px; height: 28px;"></a>
+                        <a href="https://x.com/RolePlay_Saga" target="_blank" title="Twitter/X">𝕏</a>
+                    </div>
+                </div>
+            </div>
+            <hr class="footer-divider">
+            <div class="footer-bottom"><p>&copy; 2025 Saga RP. Todos los derechos reservados.</p></div>
+        </div>
+    </footer>
+    
+    <script src="https://unpkg.com/@panzoom/panzoom@4.5.1/dist/panzoom.min.js"></script>
+
+    <script>
+        const scrollObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    const delay = index * 100;
+                    entry.target.style.transitionDelay = `${delay}ms`;
+                    entry.target.classList.add('is-visible');
+                    scrollObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.content-card').forEach((element) => {
+            scrollObserver.observe(element);
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const mapElement = document.getElementById('housing-map');
+            const zoomInButton = document.getElementById('zoom-in');
+            const zoomOutButton = document.getElementById('zoom-out');
+            const resetButton = document.getElementById('reset-zoom');
+
+            const panzoom = Panzoom(mapElement, {
+                maxScale: 5,
+                minScale: 0.8,
+                contain: 'outside'
+            });
+
+            zoomInButton.addEventListener('click', () => panzoom.zoomIn());
+            zoomOutButton.addEventListener('click', () => panzoom.zoomOut());
+            resetButton.addEventListener('click', () => panzoom.reset());
+
+            mapElement.parentElement.addEventListener('wheel', panzoom.zoomWithWheel);
+        });
+    </script>
+    <script src="../js/script.js"></script>
+</body>
+</html>

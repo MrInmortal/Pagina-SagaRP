@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saga RP </title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="assets/logo.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Definimos las variables de color para consistencia */
+        :root {
+            --primary-color: #0d1226; /* Fondo azul vibrante */
+            --accent-color: #E94560; /* Color de acento (rosa/rojo) */
+            --text-light: #E0E0E0;
+        }
+
+        /* --- ESTILOS "CRYSTALLINE AURORA" --- */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--primary-color);
+            position: relative;
+            color: var(--text-light);
+        }
+
+        /* FONDO AURORA ANIMADO */
+        .aurora-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            z-index: -1; overflow: hidden; pointer-events: none;
+        }
+        .aurora-blob {
+            position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.3;
+        }
+        .aurora-blob.one {
+            width: 500px; height: 500px; background: var(--accent-color);
+            animation: move-blob-1 25s infinite alternate ease-in-out;
+        }
+        .aurora-blob.two {
+            width: 400px; height: 400px; background: #4a69bd;
+            animation: move-blob-2 30s infinite alternate ease-in-out;
+        }
+        @keyframes move-blob-1 { from { transform: translate(-20%, -20%); } to { transform: translate(150%, 80%); } }
+        @keyframes move-blob-2 { from { transform: translate(120%, 100%); } to { transform: translate(0%, 10%); } }
+
+        /* Estilos y animación para la sección HERO */
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(100vh - 80px); /* 80px es la altura típica de un navbar */
+        }
+        .hero-title {
+            text-shadow: 0 0 15px rgba(233, 69, 96, 0.5), 0 0 30px rgba(233, 69, 96, 0.3);
+            animation: fadeInDown 1s ease-out forwards;
+        }
+        .hero-subtitle {
+            animation: fadeInUp 1s ease-out 0.3s forwards;
+            opacity: 0; /* Oculto hasta que empiece la animación */
+        }
+        .hero-buttons {
+            animation: fadeInUp 1s ease-out 0.6s forwards;
+            opacity: 0; /* Oculto hasta que empiece la animación */
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="aurora-container">
+        <div class="aurora-blob one"></div>
+        <div class="aurora-blob two"></div>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index" class="nav-logo">
+                <img src="assets/logo2.png" alt="Saga RP Logo">
+            </a>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="index" class="nav-link active">Inicio</a></li>
+                <li class="nav-item"><a href="pages/acceso" class="nav-link">Acceso</a></li>
+                <li class="nav-item dropdown">
+                    <a href="pages/normativas/normativas" class="nav-link">Normativas</a>
+                    <div class="dropdown-content">
+                        <a href="/pages/normativas/normativa-general">Normativa General</a>
+                        <a href="/pages/normativas/normativa-ilegal">Normativa Ilegal</a>
+                        <a href="/pages/normativas/normativa-streamers">Normativa Streamers</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="/pages/controles" class= "nav-link">Controles</a>
+                    <div class="dropdown-content">
+                        <a href="/pages/comandos">Comandos</a>
+                    </div>
+                </li>
+                <li class="nav-item"><a href="/housing/index" class="nav-link">Housing</a></li>
+            </ul>
+            <div class="nav-join">
+                 <a href="https://discord.gg/sagarp" target="_blank" class="btn btn-primary">Discord</a>
+            </div>
+            <div class="hamburger"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <main class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">BIENVENIDO A SAGA RP</h1>
+            <p class="hero-subtitle">Sumérgete en una experiencia de roleplay única. Crea tu historia, define tu camino y vive una nueva vida en nuestra ciudad. ¿Estás listo para empezar?</p>
+            <div class="hero-buttons">
+                <a href="pages/normativas/normativas" class="btn btn-secondary">Leer Normativa</a>
+                <a href="pages/acceso" class= "btn btn-primary">Cómo Acceder</a>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

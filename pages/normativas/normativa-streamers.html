@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Normativa para Streamers - Saga RP</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="icon" href="../../assets/logo.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Definimos las variables de color para consistencia */
+        :root {
+            --primary-color: #0d1226; /* Fondo azul vibrante */
+            --accent-color: #E94560; /* Color de acento (rosa/rojo) */
+            --text-light: #E0E0E0;
+        }
+
+        /* --- ESTILOS "CRYSTALLINE AURORA" --- */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--primary-color);
+            position: relative;
+            color: var(--text-light);
+        }
+
+        /* FONDO AURORA ANIMADO */
+        .aurora-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            z-index: -1; overflow: hidden; pointer-events: none;
+        }
+        .aurora-blob {
+            position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.3;
+        }
+        .aurora-blob.one {
+            width: 500px; height: 500px; background: var(--accent-color);
+            animation: move-blob-1 25s infinite alternate ease-in-out;
+        }
+        .aurora-blob.two {
+            width: 400px; height: 400px; background: #4a69bd;
+            animation: move-blob-2 30s infinite alternate ease-in-out;
+        }
+        @keyframes move-blob-1 { from { transform: translate(-20%, -20%); } to { transform: translate(150%, 80%); } }
+        @keyframes move-blob-2 { from { transform: translate(120%, 100%); } to { transform: translate(0%, 10%); } }
+
+        /* Estilos de la cabecera */
+        .page-header .page-title { text-shadow: 0 0 20px rgba(233, 69, 96, 0.6); }
+
+        /* Estilos para las secciones de contenido */
+        .content-section {
+            background-color: rgba(22, 33, 62, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-left: 4px solid var(--accent-color);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            opacity: 0;
+            transform: translateY(40px);
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+        }
+        .content-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        
+        /* Animación escalonada para cada tarjeta */
+        .content-section:nth-of-type(1) { transition-delay: 0s; }
+        .content-section:nth-of-type(2) { transition-delay: 0.05s; }
+        .content-section:nth-of-type(3) { transition-delay: 0.1s; }
+        .content-section:nth-of-type(4) { transition-delay: 0.15s; }
+        .content-section:nth-of-type(5) { transition-delay: 0.2s; }
+        .content-section:nth-of-type(6) { transition-delay: 0.25s; }
+        .content-section:nth-of-type(7) { transition-delay: 0.3s; }
+        .content-section:nth-of-type(8) { transition-delay: 0.35s; }
+        .content-section:nth-of-type(9) { transition-delay: 0.4s; }
+        .content-section:nth-of-type(10) { transition-delay: 0.45s; }
+        .content-section:nth-of-type(11) { transition-delay: 0.5s; }
+        
+        .content-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+        }
+
+        .content-section h2 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .content-section h3 {
+            border-bottom: 1px solid rgba(233, 69, 96, 0.5);
+            padding-bottom: 0.5rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .content-section p {
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        .content-section p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Viñetas de neón */
+        .content-section ul {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 1rem;
+        }
+        .content-section li {
+             position: relative;
+             padding-left: 20px;
+             margin-bottom: 0.5rem;
+             line-height: 1.4;
+        }
+        .content-section li::before {
+            content: '•';
+            color: var(--accent-color);
+            position: absolute;
+            left: 0;
+            font-size: 1.5rem;
+            line-height: 1.1;
+            text-shadow: 0 0 8px rgba(233, 69, 96, 0.7);
+        }
+    </style>
+</head>
+<body>
+    <div class="aurora-container">
+        <div class="aurora-blob one"></div>
+        <div class="aurora-blob two"></div>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../../index" class="nav-logo"><img src="../../assets/logo2.png" alt="Saga RP Logo"></a>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="../../index" class="nav-link">Inicio</a></li>
+                <li class="nav-item"><a href="../acceso" class="nav-link">Acceso</a></li>
+                <li class="nav-item dropdown">
+                    <a href="normativas" class="nav-link active">Normativas</a>
+                    <div class="dropdown-content">
+                        <a href="normativa-general">Normativa General</a>
+                        <a href="normativa-ilegal">Normativa Ilegal</a>
+                        <a href="normativa-streamers">Normativa Streamers</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="../controles" class="nav-link">Controles</a>
+                    <div class="dropdown-content">
+                        <a href="../comandos">Comandos</a>
+                    </div>
+                </li>
+                <li class="nav-item"><a href="/housing/index" class="nav-link">Housing</a></li>
+            </ul>
+            <div class="nav-join"><a href="https://discord.gg/sagarp" target="_blank" class="btn btn-primary">Discord</a></div>
+            <div class="hamburger"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+    
+    <main>
+        <header class="page-header">
+            <h1 class="page-title">Normativa para Content Creators</h1>
+            <p class="page-subtitle">Directrices esenciales para todos los creadores de contenido de nuestra comunidad.</p>
+        </header>
+
+        <div class="container">
+            <div class="content-section">
+                <h2>1. NOMBRE EN EL TÍTULO</h2>
+                <p>En el título de tu stream o vídeo debe aparecer el nombre del servidor: <strong>SAGA RP</strong>.</p>
+            </div>
+            <div class="content-section">
+                <h2>2. NORMATIVA</h2>
+                <p>Al stremear el servidor te conviertes en la <strong>cara visible</strong> de la comunidad. Por ello, es obligatorio respetar la normativa y tener presente que representas al servidor.</p>
+            </div>
+            <div class="content-section">
+                <h2>3. PROBLEMAS</h2>
+                <p>Cualquier problema deberá ser tratado <strong>directamente con la administración</strong> y siempre se realizará <strong>fuera de cámaras</strong>. Solo si fuese muy necesario, deberás estar disponible para la administración durante la transmisión.</p>
+            </div>
+            <div class="content-section">
+                <h2>4. VODS Y CLIPS</h2>
+                <p>Es obligatorio tener <strong>activados y públicos</strong> los VODs y Clips.</p>
+            </div>
+            <div class="content-section">
+                <h2>5. TOXICIDAD</h2>
+                <p>Queda prohibido fomentar cualquier tipo de <strong>toxicidad</strong> hacia:</p>
+                <ul>
+                    <li>El servidor</li>
+                    <li>La administración</li>
+                    <li>Otros creadores de contenido</li>
+                </ul>
+            </div>
+            <div class="content-section">
+                <h2>6. COMPORTAMIENTO</h2>
+                <p>Debes cumplir las <strong>normas de comportamiento</strong> y los <strong>términos y condiciones</strong> de Twitch y demás plataformas de creación de contenido.</p>
+            </div>
+            <div class="content-section">
+                <h2>7. RESPONSABILIDAD EN DIRECTO</h2>
+                <p>El creador de contenido es <strong>responsable de su chat en directo</strong> y de los comentarios en sus vídeos publicados.</p>
+            </div>
+            <div class="content-section">
+                <h2>8. RETIRADA DE PERMISOS</h2>
+                <p>La administración se reserva el derecho de <strong>retirar el permiso de stremear en el servidor</strong> si lo considera conveniente.</p>
+            </div>
+            <div class="content-section">
+                <h2>9. SANCIONES Y REPORTES</h2>
+                <h3>9.1. Comportamientos discriminatorios</h3>
+                <p>Comportamientos racistas, machistas o de carácter extremo o cargante no están permitidos. La administración valorará la situación y aplicará sanciones.</p>
+                <h3>9.2. Reinicios</h3>
+                <p>No se podrá cometer actividades ilegales 15 minutos antes ni 15 minutos después de los reinicios programados.</p>
+            </div>
+            <div class="content-section">
+                <h2>10. SISTEMA DE STRIKES</h2>
+                <p>El incumplimiento de la normativa supondrá 1 strike.</p>
+                <h3>Sanciones por acumulación</h3>
+                <ul>
+                    <li>Al acumular 3 strikes, recibirás un baneo de 7 días.</li>
+                    <li>Tras cumplir esos 7 días, si vuelves a acumular otros 3 strikes, el baneo será de 30 días.</li>
+                </ul>
+                <h3>Sanciones graves</h3>
+                <p>Las sanciones graves como <strong>MetaGaming (MG)</strong>, conductas inapropiadas hacia otros usuarios o el <strong>abuso de exploits</strong> serán sancionadas directamente por el equipo de administración <strong>sin necesidad de acumular strikes</strong>.</p>
+            </div>
+
+            <div class="content-section" style="border-left-color: #fff;">
+                <p style="font-weight: bold;">TODA LA NORMATIVA QUEDA SUJETA A CAMBIOS Y ESTARÁ BAJO SUPERVISIÓN DEL CRITERIO DEL EQUIPO ADMINISTRATIVO.</p>
+                <hr style="border-color: rgba(255,255,255,0.1); margin: 1rem 0;">
+                <h3 style="font-size: 1rem; color: var(--accent-color);">Copyright © Todos los Derechos Reservados</h3>
+                <p style="font-size: 0.8rem; line-height: 1.5;">La reproducción, modificación no autorizada, copia, uso, préstamo, transmisión o difusión total o parcial de este material (textos, imágenes, diseños, arte, fotografía, video, animación, compilación, software, base de datos, marcas registradas u otra propiedad intelectual) queda prohibida sin autorización por escrito de sus propietarios. El material de este sitio no se puede vender ni distribuir para obtener beneficios. En caso de incumplimiento, se emprenderán las acciones legales pertinentes.</p>
+           </div>
+        </div>
+    </main>
+    
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-top">
+                <div class="footer-column footer-about">
+                    <a href="/" class="footer-logo">
+                        <img src="/assets/logo2.png" alt="Saga RP Logo">
+                    </a>
+                    <p>Una comunidad de roleplay seria, comprometida con crear historias inmersivas e inolvidables. ¿Estás listo para empezar la tuya?</p>
+                </div>
+                <div class="footer-column">
+                    <h4>Enlaces Rápidos</h4>
+                    <ul>
+                        <li><a href="/">Inicio</a></li>
+                        <li><a href="../acceso">Acceso al Servidor</a></li>
+                        <li><a href="normativas">Normativas</a></li>
+                        <li><a href="../controles">Controles</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Comunidad</h4>
+                    <div class="social-links">
+                        <a href="https://discord.gg/sagarp" target="_blank" title="Discord">
+                            <img src="/assets/discord-logo.png" alt="Discord Logo" style="width: 28px; height: 28px; vertical-align: middle;">
+                        </a>
+                        <a href="https://x.com/RolePlay_Saga" target="_blank" title="Twitter/X">
+                            𝕏
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <hr class="footer-divider">
+            <div class="footer-bottom">
+                <p>&copy; 2025 Saga RP. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // SCRIPT PARA ANIMACIONES DE SCROLL
+        const scrollObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    scrollObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.content-section').forEach((section) => {
+            scrollObserver.observe(section);
+        });
+    </script>
+    <script src="../../js/script.js"></script>
+</body>
+</html>

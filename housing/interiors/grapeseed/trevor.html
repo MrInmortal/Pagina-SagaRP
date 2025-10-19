@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trevor - Saga RP</title>
+    <link rel="stylesheet" href="../../../css/styles.css">
+    <link rel="stylesheet" href="../../../css/housing-styles.css">
+    <link rel="icon" href="../../../assets/logo.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ESTILOS ADICIONALES PARA LA PÁGINA DE DETALLE */
+        .interior-layout {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .main-image {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-top: 56.25%; /* Crea la proporción 16:9 (9 / 16 * 100) */
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(137, 151, 199, 0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+        .main-image img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .thumbnail-images {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .thumbnail-images img {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+            opacity: 0.6;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .thumbnail-images img:hover,
+        .thumbnail-images img.active {
+            opacity: 1;
+            border-color: var(--accent-color);
+            transform: scale(1.05);
+        }
+
+        /* === INICIO DE LOS CAMBIOS EN EL CSS === */
+        .interior-details h2 {
+            color: var(--accent-color); /* Cambia el color del título "Información del Inmueble" */
+            font-size: 1.8rem; /* Puedes ajustar el tamaño si quieres */
+            margin-bottom: 1.5rem;
+        }
+        .info-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 1.5rem;
+        }
+        .info-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(137, 151, 199, 0.15);
+            font-size: 0.95rem;
+        }
+        .info-list li:first-child {
+            border-top: 1px solid rgba(137, 151, 199, 0.15);
+        }
+        .info-list strong {
+            color: var(--text-light);
+        }
+        .info-list .price {
+            color: #00ffaa;
+            font-weight: 600;
+        }
+        /* === FIN DE LOS CAMBIOS EN EL CSS === */
+
+        @media (max-width: 992px) {
+            .interior-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="aurora-container"><div class="aurora-blob one"></div><div class="aurora-blob two"></div></div>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../../../index" class="nav-logo"><img src="../../../assets/logo2.png" alt="Saga RP Logo"></a>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="../../../index" class="nav-link">Inicio</a></li>
+                <li class="nav-item"><a href="../../../pages/acceso" class="nav-link">Acceso</a></li>
+                <li class="nav-item dropdown"><a href="/pages/normativas/normativas" class="nav-link">Normativas</a><div class="dropdown-content"><a href="../../../pages/normativas/normativa-general">Normativa General</a><a href="../../../pages/normativas/normativa-ilegal">Normativa Ilegal</a><a href="../../../pages/normativas/normativa-streamers">Normativa Streamers</a></div></li>
+                <li class="nav-item dropdown"><a href="../../../pages/controles" class="nav-link">Controles</a><div class="dropdown-content"><a href="../../../pages/comandos">Comandos</a></div></li>
+                <li class="nav-item"><a href="/housing/index" class="nav-link active">Housing</a></li>
+            </ul>
+            <div class="nav-join"><a href="https://discord.gg/sagarp" target="_blank" class="btn btn-primary">Discord</a></div>
+            <div class="hamburger"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+    <main>
+        <header class="page-header"><h1 class="page-title">Trevor</h1><p class="page-subtitle">Detalles y galería del interior.</p></header>
+        <div class="container">
+            <div class="content-card">
+                <div class="interior-layout">
+                    <div class="interior-gallery">
+                        <div class="main-image"><img src="/assets-housing/Trevor-1.png" alt="Vista 1" id="main-gallery-image"></div>
+                        <div class="thumbnail-images">
+                            <img src="/assets-housing/Trevor-1.png" alt="Miniatura 1" class="thumbnail active">
+                            <img src="/assets-housing/Trevor-2.png" alt="Miniatura 2" class="thumbnail">
+                            <img src="/assets-housing/Trevor-1.png" alt="Miniatura 3" class="thumbnail">
+                        </div>
+                    </div>
+                    <div class="interior-details">
+                        <h2>Información del Inmueble</h2>
+                        <p>Una residencia con carácter, inspirada en un estilo rústico. Ideal para quienes buscan un espacio único y diferente.</p>
+                        <ul class="info-list">
+                            <li><strong>Precio Base:</strong> <span class="price">60.000$</span></li>
+                            <li><strong>Habitaciones:</strong> 2</li>
+                            <li><strong>Baños:</strong> 1</li>
+                            <li><strong>Garaje:</strong> No incluido</li>
+                            <li><strong>Zonas Comunes:</strong> Salón-cocina</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-top">
+                <div class="footer-column footer-about">
+                    <a href="../../../index" class="footer-logo"><img src="../../../assets/logo2.png" alt="Saga RP Logo"></a>
+                    <p>Una comunidad de roleplay seria, comprometida con crear historias inmersivas e inolvidables. ¿Estás listo para empezar la tuya?</p>
+                </div>
+                <div class="footer-column">
+                    <h4>Enlaces Rápidos</h4>
+                    <ul>
+                        <li><a href="../../../index">Inicio</a></li>
+                        <li><a href="../../../pages/acceso">Acceso al Servidor</a></li>
+                        <li><a href="/pages/normativas/normativas">Normativas</a></li>
+                        <li><a href="../../../pages/controles">Controles</a></li>
+                        <li><a href="../../index">Housing</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Comunidad</h4>
+                    <div class="social-links">
+                        <a href="https://discord.gg/sagarp" target="_blank" title="Discord"><img src="../../../assets/discord-logo.png" alt="Discord Logo" style="width: 28px; height: 28px;"></a>
+                        <a href="https://x.com/RolePlay_Saga" target="_blank" title="Twitter/X">𝕏</a>
+                    </div>
+                </div>
+            </div>
+            <hr class="footer-divider">
+            <div class="footer-bottom"><p>&copy; 2025 Saga RP. Todos los derechos reservados.</p></div>
+        </div>
+    </footer>
+    <script src="../../js/script.js"></script>
+    <script>document.addEventListener('DOMContentLoaded',()=>{const e=document.getElementById('main-gallery-image'),t=document.querySelectorAll('.thumbnail');t.forEach(o=>{o.addEventListener('click',function(){e.src=this.src,t.forEach(e=>e.classList.remove('active')),this.classList.add('active')})})});</script>
+</body>
+</html>
