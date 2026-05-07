@@ -4,75 +4,431 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Housing - Saga RP</title>
+
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="icon" href="../assets/logo.png" type="image/png">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
-        :root { --primary-color: #0d1226; --accent-color: #E94560; --text-light: #E0E0E0; --text-dark: #A0A0A0; --card-background: rgba(22, 33, 62, 0.6); }
-        body { 
-            font-family: 'Poppins', sans-serif; 
-            background-color: var(--primary-color); 
-            position: relative; 
-            color: var(--text-light); 
-            min-height: 100vh; 
-            display: flex; 
-            flex-direction: column;
-            padding-top: 80px; /* <-- CORRECCIÓN IMPORTANTE: Empuja el contenido hacia abajo */
+        :root {
+            --primary-color: #03080b;
+            --accent-color: #7CFF2B;
+            --accent-glow: rgba(124, 255, 43, 0.55);
+            --accent-soft: rgba(124, 255, 43, 0.12);
+            --text-light: #ffffff;
+            --text-dark: #b7c7bd;
+            --card-background: rgba(7, 18, 18, 0.86);
+            --border-soft: rgba(124, 255, 43, 0.18);
+            --success: #7CFF2B;
         }
-        main { flex: 1; }
-        .aurora-container { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; overflow: hidden; pointer-events: none; }
-        .aurora-blob { position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.3; }
-        .aurora-blob.one { width: 500px; height: 500px; background: var(--accent-color); animation: move-blob-1 25s infinite alternate ease-in-out; }
-        .aurora-blob.two { width: 400px; height: 400px; background: #4a69bd; animation: move-blob-2 30s infinite alternate ease-in-out; }
-        @keyframes move-blob-1 { from { transform: translate(-20%, -20%); } to { transform: translate(150%, 80%); } }
-        @keyframes move-blob-2 { from { transform: translate(120%, 100%); } to { transform: translate(0%, 10%); } }
-        
-        .page-header { background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('../assets-housing/bg.jpg') no-repeat center center; background-size: cover; padding: 60px 0; margin-bottom: 2rem; text-align: center; border-bottom: 3px solid var(--accent-color); }
-        .page-header .page-title { text-shadow: 0 0 20px rgba(233, 69, 96, 0.6); font-size: 3.5rem; }
-        
-        .content-card { background-color: var(--card-background); backdrop-filter: blur(10px); border: 1px solid rgba(137, 151, 199, 0.2); border-radius: 12px; padding: 2rem; margin-bottom: 2rem; opacity: 0; transform: translateY(40px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
-        .content-card.is-visible { opacity: 1; transform: translateY(0); }
-        .content-card h2 { margin-top: 0; }
-        
-        .intro-text p { line-height: 1.7; }
-        .text-important { color: var(--accent-color); font-weight: 600; }
 
-        .map-container { height: 500px; overflow: hidden; border-radius: 8px; cursor: grab; position: relative; border: 1px solid rgba(137, 151, 199, 0.2); }
-        .map-container:active { cursor: grabbing; }
-        .map-container #housing-map { width: 100%; height: auto; }
-        .map-controls { position: absolute; top: 10px; right: 10px; z-index: 10; display: flex; gap: 5px; }
-        .map-controls button { background-color: rgba(30, 30, 40, 0.8); border: 1px solid rgba(255, 255, 255, 0.2); color: white; width: 32px; height: 32px; border-radius: 4px; cursor: pointer; font-size: 1.2rem; font-weight: bold; display: flex; align-items: center; justify-content: center; }
-        .map-controls button:hover { background-color: rgba(50, 50, 60, 0.9); }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background:
+                radial-gradient(circle at top left, rgba(124,255,43,.13), transparent 34%),
+                radial-gradient(circle at bottom right, rgba(0,255,170,.08), transparent 34%),
+                #03080b;
+            color: var(--text-light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding-top: 80px;
+            overflow-x: hidden;
+        }
 
-        .housing-layout-grid { display: grid; grid-template-columns: 1fr 1.7fr; gap: 2rem; align-items: start; }
-        
-        .price-table { width: 100%; border-collapse: collapse; margin-top: 1.5rem; text-align: left; }
-        .price-table th, .price-table td { padding: 1rem; border-bottom: 1px solid rgba(137, 151, 199, 0.15); }
-        .price-table th { background-color: var(--accent-color); color: var(--text-light); font-weight: 600; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.05em; }
-        .price-table th:first-child { border-radius: 8px 0 0 0; }
-        .price-table th:last-child { border-radius: 0 8px 0 0; text-align: right;}
-        .price-table tr:last-child td { border-bottom: none; }
-        .price-table td { font-size: 0.95rem; }
-        .price-table .price { color: #00ffaa; font-weight: 600; text-align: right; }
+        main {
+            flex: 1;
+        }
 
-        .zone-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1.5rem; }
-        .zone-card { background-color: #16213e; border: 1px solid rgba(137, 151, 199, 0.2); border-radius: 8px; padding: 1.2rem; text-align: left; transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease; text-decoration: none; color: inherit; display: block; }
-        .zone-card:hover { transform: translateY(-4px); box-shadow: 0 5px 15px rgba(0,0,0,0.3); background-color: #1a2749; }
-        .zone-card h3 { color: var(--text-light); margin: 0 0 0.3rem 0; font-size: 1rem; font-weight: 600;}
-        .zone-card p { color: var(--text-dark); font-size: 0.8rem; margin: 0; line-height: 1.5; }
+        .navbar {
+            background: rgba(3, 8, 11, 0.86);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(124,255,43,.18);
+        }
+
+        .nav-logo img,
+        .footer-logo img {
+            filter: drop-shadow(0 0 14px rgba(124,255,43,.45));
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--accent-color);
+            text-shadow: 0 0 16px var(--accent-glow);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #7CFF2B, #18d66f);
+            color: #061006 !important;
+            border: none;
+            box-shadow: 0 0 24px rgba(124,255,43,.28);
+            transition: .25s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 36px rgba(124,255,43,.5);
+        }
+
+        .aurora-container {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .aurora-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: .35;
+        }
+
+        .aurora-blob.one {
+            width: 520px;
+            height: 520px;
+            background: #7CFF2B;
+            animation: move-blob-1 25s infinite alternate ease-in-out;
+        }
+
+        .aurora-blob.two {
+            width: 420px;
+            height: 420px;
+            background: #00ffaa;
+            animation: move-blob-2 30s infinite alternate ease-in-out;
+        }
+
+        @keyframes move-blob-1 {
+            from { transform: translate(-25%, -25%); }
+            to { transform: translate(145%, 80%); }
+        }
+
+        @keyframes move-blob-2 {
+            from { transform: translate(130%, 100%); }
+            to { transform: translate(0%, 10%); }
+        }
+
+        .page-header {
+            position: relative;
+            padding: 5rem 1rem 4.5rem;
+            margin-bottom: 2.5rem;
+            text-align: center;
+            overflow: hidden;
+            border-bottom: 2px solid var(--accent-color);
+            background:
+                linear-gradient(rgba(3,8,11,.55), rgba(3,8,11,.95)),
+                url('../assets-housing/bg.jpg') no-repeat center center;
+            background-size: cover;
+        }
+
+        .page-header::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at center, rgba(124,255,43,.22), transparent 45%);
+            pointer-events: none;
+        }
+
+        .page-title {
+            position: relative;
+            z-index: 1;
+            font-size: clamp(2.6rem, 5vw, 4.4rem);
+            font-weight: 800;
+            color: #ffffff;
+            text-shadow:
+                0 0 14px rgba(124,255,43,.55),
+                0 0 38px rgba(124,255,43,.35);
+            margin-bottom: .7rem;
+        }
+
+        .page-subtitle {
+            position: relative;
+            z-index: 1;
+            color: var(--text-dark);
+            font-size: 1.05rem;
+        }
+
+        .content-card {
+            background:
+                linear-gradient(145deg, rgba(10,24,22,.92), rgba(4,10,13,.96));
+            backdrop-filter: blur(14px);
+            border: 1px solid var(--border-soft);
+            border-radius: 24px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow:
+                0 20px 50px rgba(0,0,0,.48),
+                0 0 40px rgba(124,255,43,.08);
+            opacity: 0;
+            transform: translateY(40px);
+            transition:
+                opacity .6s ease-out,
+                transform .6s ease-out,
+                border-color .25s ease,
+                box-shadow .25s ease;
+        }
+
+        .content-card:hover {
+            border-color: rgba(124,255,43,.42);
+            box-shadow:
+                0 25px 65px rgba(0,0,0,.58),
+                0 0 45px rgba(124,255,43,.14);
+        }
+
+        .content-card.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .content-card h2 {
+            margin-top: 0;
+            color: var(--accent-color);
+            text-shadow: 0 0 18px rgba(124,255,43,.3);
+            font-size: 1.8rem;
+        }
+
+        .intro-text p {
+            line-height: 1.75;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+
+        .text-important {
+            color: var(--accent-color);
+            font-weight: 700;
+            text-shadow: 0 0 12px rgba(124,255,43,.25);
+        }
+
+        .map-container {
+            height: 500px;
+            overflow: hidden;
+            border-radius: 18px;
+            cursor: grab;
+            position: relative;
+            border: 1px solid rgba(124,255,43,.22);
+            box-shadow:
+                0 14px 35px rgba(0,0,0,.5),
+                0 0 28px rgba(124,255,43,.12);
+        }
+
+        .map-container:active {
+            cursor: grabbing;
+        }
+
+        .map-container #housing-map {
+            width: 100%;
+            height: auto;
+        }
+
+        .map-controls {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            z-index: 10;
+            display: flex;
+            gap: 7px;
+        }
+
+        .map-controls button {
+            background: rgba(3,8,11,.86);
+            border: 1px solid rgba(124,255,43,.35);
+            color: var(--accent-color);
+            width: 36px;
+            height: 36px;
+            border-radius: 9px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 14px rgba(124,255,43,.12);
+            transition: .2s ease;
+        }
+
+        .map-controls button:hover {
+            background: rgba(124,255,43,.14);
+            transform: translateY(-2px);
+            box-shadow: 0 0 18px rgba(124,255,43,.28);
+        }
+
+        .housing-layout-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.7fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .price-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 .7rem;
+            margin-top: 1.5rem;
+            text-align: left;
+        }
+
+        .price-table th {
+            padding: 1rem;
+            background: linear-gradient(135deg, #7CFF2B, #18d66f);
+            color: #061006;
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: .78rem;
+            letter-spacing: .05em;
+        }
+
+        .price-table th:first-child {
+            border-radius: 12px 0 0 12px;
+        }
+
+        .price-table th:last-child {
+            border-radius: 0 12px 12px 0;
+            text-align: right;
+        }
+
+        .price-table td {
+            padding: 1rem;
+            background: rgba(124,255,43,.045);
+            border-top: 1px solid rgba(124,255,43,.14);
+            border-bottom: 1px solid rgba(124,255,43,.14);
+            font-size: .95rem;
+            color: var(--text-dark);
+        }
+
+        .price-table td:first-child {
+            border-left: 1px solid rgba(124,255,43,.14);
+            border-radius: 12px 0 0 12px;
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .price-table td:last-child {
+            border-right: 1px solid rgba(124,255,43,.14);
+            border-radius: 0 12px 12px 0;
+        }
+
+        .price-table .price {
+            color: var(--success);
+            font-weight: 800;
+            text-align: right;
+            text-shadow: 0 0 12px rgba(124,255,43,.3);
+        }
+
+        .zone-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .zone-card {
+            position: relative;
+            overflow: hidden;
+            background: rgba(124,255,43,.045);
+            border: 1px solid rgba(124,255,43,.16);
+            border-radius: 16px;
+            padding: 1.25rem;
+            text-align: left;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            transition: transform .25s ease, box-shadow .25s ease, background .25s ease, border-color .25s ease;
+        }
+
+        .zone-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -80%;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(124,255,43,.13), transparent);
+            transform: skewX(-20deg);
+            transition: .45s ease;
+        }
+
+        .zone-card:hover::before {
+            left: 120%;
+        }
+
+        .zone-card:hover {
+            transform: translateY(-5px);
+            background: rgba(124,255,43,.08);
+            border-color: rgba(124,255,43,.38);
+            box-shadow:
+                0 14px 30px rgba(0,0,0,.35),
+                0 0 24px rgba(124,255,43,.12);
+        }
+
+        .zone-card h3 {
+            position: relative;
+            color: #ffffff;
+            margin: 0 0 .4rem 0;
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .zone-card p {
+            position: relative;
+            color: var(--text-dark);
+            font-size: .82rem;
+            margin: 0;
+            line-height: 1.55;
+        }
+
+        .footer {
+            padding-top: 3rem;
+        }
+
+        .footer-logo img {
+            max-width: 150px;
+        }
 
         @media (max-width: 1024px) {
-            .housing-layout-grid { grid-template-columns: 1fr; }
-            .zone-grid { grid-template-columns: repeat(2, 1fr); }
+            .housing-layout-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .zone-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
+
         @media (max-width: 600px) {
-            .zone-grid { grid-template-columns: 1fr; }
+            body {
+                padding-top: 70px;
+            }
+
+            .page-header {
+                padding: 4rem 1rem 3.5rem;
+            }
+
+            .content-card {
+                padding: 1.4rem;
+            }
+
+            .map-container {
+                height: 380px;
+            }
+
+            .zone-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .price-table th,
+            .price-table td {
+                padding: .85rem;
+                font-size: .82rem;
+            }
         }
     </style>
 </head>
+
 <body>
     <div class="aurora-container">
         <div class="aurora-blob one"></div>
@@ -105,7 +461,7 @@
             <div class="hamburger"><span></span><span></span><span></span></div>
         </div>
     </nav>
-    
+
     <main>
         <header class="page-header">
             <h1 class="page-title">Housing y Propiedades</h1>
@@ -174,7 +530,7 @@
             </div>
         </div>
     </main>
-    
+
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-top">
@@ -204,7 +560,7 @@
             <div class="footer-bottom"><p>&copy; 2025 Saga RP. Todos los derechos reservados.</p></div>
         </div>
     </footer>
-    
+
     <script src="https://unpkg.com/@panzoom/panzoom@4.5.1/dist/panzoom.min.js"></script>
 
     <script>
@@ -218,6 +574,7 @@
                 }
             });
         }, { threshold: 0.1 });
+
         document.querySelectorAll('.content-card').forEach((element) => {
             scrollObserver.observe(element);
         });
@@ -241,6 +598,7 @@
             mapElement.parentElement.addEventListener('wheel', panzoom.zoomWithWheel);
         });
     </script>
+
     <script src="../js/script.js"></script>
 </body>
 </html>
