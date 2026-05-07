@@ -3,90 +3,237 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Saga RP </title>
+    <title>Saga RP</title>
+
     <link rel="stylesheet" href="css/styles.css">
     <link rel="icon" href="assets/logo.png" type="image/png">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <style>
-        /* Definimos las variables de color para consistencia */
         :root {
-            --primary-color: #0d1226; /* Fondo azul vibrante */
-            --accent-color: #E94560; /* Color de acento (rosa/rojo) */
-            --text-light: #E0E0E0;
+            --primary-color: #03080b;
+            --accent-color: #7CFF2B;
+            --accent-glow: rgba(124, 255, 43, 0.55);
+            --accent-soft: rgba(124, 255, 43, 0.14);
+            --text-light: #ffffff;
+            --text-muted: #b7c7bd;
         }
 
-        /* --- ESTILOS "CRYSTALLINE AURORA" --- */
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: var(--primary-color);
-            position: relative;
+            background:
+                radial-gradient(circle at top left, rgba(124,255,43,.14), transparent 35%),
+                radial-gradient(circle at bottom right, rgba(0,255,170,.09), transparent 35%),
+                #03080b;
             color: var(--text-light);
+            min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        /* FONDO AURORA ANIMADO */
+        .navbar {
+            background: rgba(3, 8, 11, 0.86);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(124,255,43,.18);
+        }
+
+        .nav-logo img {
+            filter: drop-shadow(0 0 16px rgba(124,255,43,.5));
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--accent-color);
+            text-shadow: 0 0 16px var(--accent-glow);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #7CFF2B, #18d66f);
+            color: #061006 !important;
+            border: none;
+            box-shadow: 0 0 24px rgba(124,255,43,.3);
+            transition: .25s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 38px rgba(124,255,43,.55);
+        }
+
+        .btn-secondary {
+            background: rgba(124,255,43,.07);
+            border: 1px solid rgba(124,255,43,.28);
+            color: #dfffcb !important;
+            box-shadow: 0 0 18px rgba(124,255,43,.08);
+            transition: .25s ease;
+        }
+
+        .btn-secondary:hover {
+            color: var(--accent-color) !important;
+            border-color: var(--accent-color);
+            transform: translateY(-2px);
+            box-shadow: 0 0 28px rgba(124,255,43,.28);
+        }
+
         .aurora-container {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            z-index: -1; overflow: hidden; pointer-events: none;
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
         }
+
         .aurora-blob {
-            position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.3;
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: .36;
         }
+
         .aurora-blob.one {
-            width: 500px; height: 500px; background: var(--accent-color);
+            width: 520px;
+            height: 520px;
+            background: #7CFF2B;
             animation: move-blob-1 25s infinite alternate ease-in-out;
         }
+
         .aurora-blob.two {
-            width: 400px; height: 400px; background: #4a69bd;
+            width: 430px;
+            height: 430px;
+            background: #00ffaa;
             animation: move-blob-2 30s infinite alternate ease-in-out;
         }
-        @keyframes move-blob-1 { from { transform: translate(-20%, -20%); } to { transform: translate(150%, 80%); } }
-        @keyframes move-blob-2 { from { transform: translate(120%, 100%); } to { transform: translate(0%, 10%); } }
 
-        /* Estilos y animación para la sección HERO */
+        @keyframes move-blob-1 {
+            from { transform: translate(-25%, -25%); }
+            to { transform: translate(145%, 80%); }
+        }
+
+        @keyframes move-blob-2 {
+            from { transform: translate(130%, 100%); }
+            to { transform: translate(0%, 10%); }
+        }
+
         .hero {
+            position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: calc(100vh - 80px); /* 80px es la altura típica de un navbar */
+            min-height: calc(100vh - 80px);
+            padding: 2rem;
+            overflow: hidden;
         }
+
+        .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(3, 8, 11, 0.35);
+    z-index: 0;
+    pointer-events: none;
+}
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            text-align: center;
+            background: linear-gradient(145deg, rgba(10,24,22,.52), rgba(4,10,13,.42));
+            border: 1px solid rgba(124,255,43,.16);
+            border-radius: 28px;
+            backdrop-filter: blur(10px);
+            box-shadow:
+                0 25px 70px rgba(0,0,0,.35),
+                0 0 55px rgba(124,255,43,.08);
+        }
+
         .hero-title {
-            text-shadow: 0 0 15px rgba(233, 69, 96, 0.5), 0 0 30px rgba(233, 69, 96, 0.3);
+            font-size: clamp(2.8rem, 7vw, 6rem);
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: .02em;
+            color: #ffffff;
+            text-shadow:
+                0 0 14px rgba(124,255,43,.6),
+                0 0 42px rgba(124,255,43,.36),
+                0 0 80px rgba(124,255,43,.18);
             animation: fadeInDown 1s ease-out forwards;
         }
+
         .hero-subtitle {
-            animation: fadeInUp 1s ease-out 0.3s forwards;
-            opacity: 0; /* Oculto hasta que empiece la animación */
+            max-width: 760px;
+            margin: 1.4rem auto 0;
+            color: var(--text-muted);
+            font-size: clamp(1rem, 2vw, 1.18rem);
+            line-height: 1.75;
+            animation: fadeInUp 1s ease-out .3s forwards;
+            opacity: 0;
         }
+
         .hero-buttons {
-            animation: fadeInUp 1s ease-out 0.6s forwards;
-            opacity: 0; /* Oculto hasta que empiece la animación */
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+            animation: fadeInUp 1s ease-out .6s forwards;
+            opacity: 0;
+        }
+
+        .hero-buttons .btn {
+            padding: .9rem 1.35rem;
+            border-radius: 12px;
+            font-weight: 800;
         }
 
         @keyframes fadeInDown {
             from {
                 opacity: 0;
-                transform: translateY(-30px);
+                transform: translateY(-28px);
             }
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
+
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(28px);
             }
             to {
                 opacity: 1;
                 transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                min-height: calc(100vh - 70px);
+                padding: 1.25rem;
+            }
+
+            .hero-content {
+                padding: 2.2rem 1.3rem;
+                border-radius: 22px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .hero-buttons .btn {
+                width: 100%;
             }
         }
     </style>
 </head>
+
 <body>
     <div class="aurora-container">
         <div class="aurora-blob one"></div>
@@ -98,9 +245,11 @@
             <a href="index" class="nav-logo">
                 <img src="assets/logo2.png" alt="Saga RP Logo">
             </a>
+
             <ul class="nav-menu">
                 <li class="nav-item"><a href="index" class="nav-link active">Inicio</a></li>
                 <li class="nav-item"><a href="pages/acceso" class="nav-link">Acceso</a></li>
+
                 <li class="nav-item dropdown">
                     <a href="pages/normativas/normativas" class="nav-link">Normativas</a>
                     <div class="dropdown-content">
@@ -109,17 +258,21 @@
                         <a href="/pages/normativas/normativa-streamers">Normativa Streamers</a>
                     </div>
                 </li>
+
                 <li class="nav-item dropdown">
-                    <a href="/pages/controles" class= "nav-link">Controles</a>
+                    <a href="/pages/controles" class="nav-link">Controles</a>
                     <div class="dropdown-content">
                         <a href="/pages/comandos">Comandos</a>
                     </div>
                 </li>
+
                 <li class="nav-item"><a href="/housing/index" class="nav-link">Housing</a></li>
             </ul>
+
             <div class="nav-join">
-                 <a href="https://discord.gg/sagarp" target="_blank" class="btn btn-primary">Discord</a>
+                <a href="https://discord.gg/sagarp" target="_blank" class="btn btn-primary">Discord</a>
             </div>
+
             <div class="hamburger"><span></span><span></span><span></span></div>
         </div>
     </nav>
@@ -127,10 +280,16 @@
     <main class="hero">
         <div class="hero-content">
             <h1 class="hero-title">BIENVENIDO A SAGA RP</h1>
-            <p class="hero-subtitle">Sumérgete en una experiencia de roleplay única. Crea tu historia, define tu camino y vive una nueva vida en nuestra ciudad. ¿Estás listo para empezar?</p>
+
+            <p class="hero-subtitle">
+                Sumérgete en una experiencia de roleplay única. Crea tu historia,
+                define tu camino y vive una nueva vida en nuestra ciudad.
+                ¿Estás listo para empezar?
+            </p>
+
             <div class="hero-buttons">
                 <a href="pages/normativas/normativas" class="btn btn-secondary">Leer Normativa</a>
-                <a href="pages/acceso" class= "btn btn-primary">Cómo Acceder</a>
+                <a href="pages/acceso" class="btn btn-primary">Cómo Acceder</a>
             </div>
         </div>
     </main>
