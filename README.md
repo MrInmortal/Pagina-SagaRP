@@ -135,27 +135,58 @@ Text Color         → #ffffff
 SAGA-RP/
 │
 ├── assets/
-│   ├── logo.png
-│   ├── logo2.png
-│   ├── discord-logo.png
-│   └── housing/
+│
+├── assets-housing/
 │
 ├── css/
-│   ├── styles.css
+│   ├── housing-interiors.css
 │   ├── housing-styles.css
 │   ├── housing-zones.css
-│   └── housing-interiors.css
+│   └── styles.css
+│
+├── housing/
+│   │
+│   ├── interiors/
+│   │   ├── barrios-bajos/
+│   │   ├── downtown/
+│   │   ├── grapeseed/
+│   │   ├── great-ocean/
+│   │   ├── mirror-park/
+│   │   ├── paleto-bay/
+│   │   ├── rockford-hills/
+│   │   ├── sandy-shores/
+│   │   ├── vespucci-beach/
+│   │   └── vinewood-hills/
+│   │
+│   ├── barrios-bajos.html
+│   ├── downtown.html
+│   ├── grapeseed.html
+│   ├── great-ocean.html
+│   ├── index.html
+│   ├── mirror-park.html
+│   ├── paleto-bay.html
+│   ├── rockford-hills.html
+│   ├── sandy-shores.html
+│   ├── vespucci-beach.html
+│   └── vinewood-hills.html
+│
+├── images/
+│   ├── banner.png
+│   └── bg.jpg
 │
 ├── js/
+│   ├── housing-script.js
 │   └── script.js
 │
 ├── pages/
-│   ├── acceso.html
-│   ├── controles.html
-│   ├── comandos.html
 │   │
-│   ├── housing/
-│   └── normativas/
+│   ├── normativas/
+│   │   ├── normativa-general.html
+│   │   ├── normativa-ilegal.html
+│   │   ├── normativa-streamers.html
+│   │   └── normativas.html
+│   │
+│   └── acceso.html
 │
 └── index.html
 ```
